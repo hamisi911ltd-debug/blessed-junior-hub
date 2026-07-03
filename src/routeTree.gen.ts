@@ -14,12 +14,14 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardUsersRouteImport } from './routes/_authenticated/dashboard.users'
 import { Route as AuthenticatedDashboardTermsRouteImport } from './routes/_authenticated/dashboard.terms'
 import { Route as AuthenticatedDashboardTeachersRouteImport } from './routes/_authenticated/dashboard.teachers'
 import { Route as AuthenticatedDashboardSubjectsRouteImport } from './routes/_authenticated/dashboard.subjects'
 import { Route as AuthenticatedDashboardStudentsRouteImport } from './routes/_authenticated/dashboard.students'
 import { Route as AuthenticatedDashboardResultsRouteImport } from './routes/_authenticated/dashboard.results'
 import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
+import { Route as AuthenticatedDashboardMyChildrenRouteImport } from './routes/_authenticated/dashboard.my-children'
 import { Route as AuthenticatedDashboardInvoicesRouteImport } from './routes/_authenticated/dashboard.invoices'
 import { Route as AuthenticatedDashboardFeesRouteImport } from './routes/_authenticated/dashboard.fees'
 import { Route as AuthenticatedDashboardExpendituresRouteImport } from './routes/_authenticated/dashboard.expenditures'
@@ -51,6 +53,12 @@ const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/',
     path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardUsersRoute =
+  AuthenticatedDashboardUsersRouteImport.update({
+    id: '/users',
+    path: '/users',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardTermsRoute =
@@ -87,6 +95,12 @@ const AuthenticatedDashboardPaymentsRoute =
   AuthenticatedDashboardPaymentsRouteImport.update({
     id: '/payments',
     path: '/payments',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardMyChildrenRoute =
+  AuthenticatedDashboardMyChildrenRouteImport.update({
+    id: '/my-children',
+    path: '/my-children',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardInvoicesRoute =
@@ -143,12 +157,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
   '/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
   '/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
   '/dashboard/results': typeof AuthenticatedDashboardResultsRoute
   '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
   '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
   '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
+  '/dashboard/users': typeof AuthenticatedDashboardUsersRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
@@ -161,12 +177,14 @@ export interface FileRoutesByTo {
   '/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
   '/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
   '/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
   '/dashboard/results': typeof AuthenticatedDashboardResultsRoute
   '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
   '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
   '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
+  '/dashboard/users': typeof AuthenticatedDashboardUsersRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -182,12 +200,14 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
   '/_authenticated/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
   '/_authenticated/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/_authenticated/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
   '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
   '/_authenticated/dashboard/results': typeof AuthenticatedDashboardResultsRoute
   '/_authenticated/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/_authenticated/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
   '/_authenticated/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
   '/_authenticated/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
+  '/_authenticated/dashboard/users': typeof AuthenticatedDashboardUsersRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
@@ -203,12 +223,14 @@ export interface FileRouteTypes {
     | '/dashboard/expenditures'
     | '/dashboard/fees'
     | '/dashboard/invoices'
+    | '/dashboard/my-children'
     | '/dashboard/payments'
     | '/dashboard/results'
     | '/dashboard/students'
     | '/dashboard/subjects'
     | '/dashboard/teachers'
     | '/dashboard/terms'
+    | '/dashboard/users'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -221,12 +243,14 @@ export interface FileRouteTypes {
     | '/dashboard/expenditures'
     | '/dashboard/fees'
     | '/dashboard/invoices'
+    | '/dashboard/my-children'
     | '/dashboard/payments'
     | '/dashboard/results'
     | '/dashboard/students'
     | '/dashboard/subjects'
     | '/dashboard/teachers'
     | '/dashboard/terms'
+    | '/dashboard/users'
     | '/dashboard'
   id:
     | '__root__'
@@ -241,12 +265,14 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/expenditures'
     | '/_authenticated/dashboard/fees'
     | '/_authenticated/dashboard/invoices'
+    | '/_authenticated/dashboard/my-children'
     | '/_authenticated/dashboard/payments'
     | '/_authenticated/dashboard/results'
     | '/_authenticated/dashboard/students'
     | '/_authenticated/dashboard/subjects'
     | '/_authenticated/dashboard/teachers'
     | '/_authenticated/dashboard/terms'
+    | '/_authenticated/dashboard/users'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -293,6 +319,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/users': {
+      id: '/_authenticated/dashboard/users'
+      path: '/users'
+      fullPath: '/dashboard/users'
+      preLoaderRoute: typeof AuthenticatedDashboardUsersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/terms': {
       id: '/_authenticated/dashboard/terms'
       path: '/terms'
@@ -333,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/payments'
       fullPath: '/dashboard/payments'
       preLoaderRoute: typeof AuthenticatedDashboardPaymentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/my-children': {
+      id: '/_authenticated/dashboard/my-children'
+      path: '/my-children'
+      fullPath: '/dashboard/my-children'
+      preLoaderRoute: typeof AuthenticatedDashboardMyChildrenRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/invoices': {
@@ -395,12 +435,14 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardExpendituresRoute: typeof AuthenticatedDashboardExpendituresRoute
   AuthenticatedDashboardFeesRoute: typeof AuthenticatedDashboardFeesRoute
   AuthenticatedDashboardInvoicesRoute: typeof AuthenticatedDashboardInvoicesRoute
+  AuthenticatedDashboardMyChildrenRoute: typeof AuthenticatedDashboardMyChildrenRoute
   AuthenticatedDashboardPaymentsRoute: typeof AuthenticatedDashboardPaymentsRoute
   AuthenticatedDashboardResultsRoute: typeof AuthenticatedDashboardResultsRoute
   AuthenticatedDashboardStudentsRoute: typeof AuthenticatedDashboardStudentsRoute
   AuthenticatedDashboardSubjectsRoute: typeof AuthenticatedDashboardSubjectsRoute
   AuthenticatedDashboardTeachersRoute: typeof AuthenticatedDashboardTeachersRoute
   AuthenticatedDashboardTermsRoute: typeof AuthenticatedDashboardTermsRoute
+  AuthenticatedDashboardUsersRoute: typeof AuthenticatedDashboardUsersRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
@@ -416,12 +458,15 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
       AuthenticatedDashboardExpendituresRoute,
     AuthenticatedDashboardFeesRoute: AuthenticatedDashboardFeesRoute,
     AuthenticatedDashboardInvoicesRoute: AuthenticatedDashboardInvoicesRoute,
+    AuthenticatedDashboardMyChildrenRoute:
+      AuthenticatedDashboardMyChildrenRoute,
     AuthenticatedDashboardPaymentsRoute: AuthenticatedDashboardPaymentsRoute,
     AuthenticatedDashboardResultsRoute: AuthenticatedDashboardResultsRoute,
     AuthenticatedDashboardStudentsRoute: AuthenticatedDashboardStudentsRoute,
     AuthenticatedDashboardSubjectsRoute: AuthenticatedDashboardSubjectsRoute,
     AuthenticatedDashboardTeachersRoute: AuthenticatedDashboardTeachersRoute,
     AuthenticatedDashboardTermsRoute: AuthenticatedDashboardTermsRoute,
+    AuthenticatedDashboardUsersRoute: AuthenticatedDashboardUsersRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
 
