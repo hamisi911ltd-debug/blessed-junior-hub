@@ -9,38 +9,315 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardUsersRouteImport } from './routes/_authenticated/dashboard.users'
+import { Route as AuthenticatedDashboardTermsRouteImport } from './routes/_authenticated/dashboard.terms'
+import { Route as AuthenticatedDashboardTeachersRouteImport } from './routes/_authenticated/dashboard.teachers'
+import { Route as AuthenticatedDashboardSubjectsRouteImport } from './routes/_authenticated/dashboard.subjects'
+import { Route as AuthenticatedDashboardStudentsRouteImport } from './routes/_authenticated/dashboard.students'
+import { Route as AuthenticatedDashboardResultsRouteImport } from './routes/_authenticated/dashboard.results'
+import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
+import { Route as AuthenticatedDashboardMyChildrenRouteImport } from './routes/_authenticated/dashboard.my-children'
+import { Route as AuthenticatedDashboardInvoicesRouteImport } from './routes/_authenticated/dashboard.invoices'
+import { Route as AuthenticatedDashboardFeesRouteImport } from './routes/_authenticated/dashboard.fees'
+import { Route as AuthenticatedDashboardExpendituresRouteImport } from './routes/_authenticated/dashboard.expenditures'
+import { Route as AuthenticatedDashboardExamsRouteImport } from './routes/_authenticated/dashboard.exams'
+import { Route as AuthenticatedDashboardCurriculumRouteImport } from './routes/_authenticated/dashboard.curriculum'
+import { Route as AuthenticatedDashboardClassesRouteImport } from './routes/_authenticated/dashboard.classes'
+import { Route as AuthenticatedDashboardAnnouncementsRouteImport } from './routes/_authenticated/dashboard.announcements'
 
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDashboardIndexRoute =
+  AuthenticatedDashboardIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardUsersRoute =
+  AuthenticatedDashboardUsersRouteImport.update({
+    id: '/users',
+    path: '/users',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardTermsRoute =
+  AuthenticatedDashboardTermsRouteImport.update({
+    id: '/terms',
+    path: '/terms',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardTeachersRoute =
+  AuthenticatedDashboardTeachersRouteImport.update({
+    id: '/teachers',
+    path: '/teachers',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardSubjectsRoute =
+  AuthenticatedDashboardSubjectsRouteImport.update({
+    id: '/subjects',
+    path: '/subjects',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardStudentsRoute =
+  AuthenticatedDashboardStudentsRouteImport.update({
+    id: '/students',
+    path: '/students',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardResultsRoute =
+  AuthenticatedDashboardResultsRouteImport.update({
+    id: '/results',
+    path: '/results',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPaymentsRoute =
+  AuthenticatedDashboardPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardMyChildrenRoute =
+  AuthenticatedDashboardMyChildrenRouteImport.update({
+    id: '/my-children',
+    path: '/my-children',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardInvoicesRoute =
+  AuthenticatedDashboardInvoicesRouteImport.update({
+    id: '/invoices',
+    path: '/invoices',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardFeesRoute =
+  AuthenticatedDashboardFeesRouteImport.update({
+    id: '/fees',
+    path: '/fees',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardExpendituresRoute =
+  AuthenticatedDashboardExpendituresRouteImport.update({
+    id: '/expenditures',
+    path: '/expenditures',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardExamsRoute =
+  AuthenticatedDashboardExamsRouteImport.update({
+    id: '/exams',
+    path: '/exams',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardCurriculumRoute =
+  AuthenticatedDashboardCurriculumRouteImport.update({
+    id: '/curriculum',
+    path: '/curriculum',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardClassesRoute =
+  AuthenticatedDashboardClassesRouteImport.update({
+    id: '/classes',
+    path: '/classes',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAnnouncementsRoute =
+  AuthenticatedDashboardAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/dashboard/announcements': typeof AuthenticatedDashboardAnnouncementsRoute
+  '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/dashboard/curriculum': typeof AuthenticatedDashboardCurriculumRoute
+  '/dashboard/exams': typeof AuthenticatedDashboardExamsRoute
+  '/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
+  '/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
+  '/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
+  '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/results': typeof AuthenticatedDashboardResultsRoute
+  '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
+  '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
+  '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
+  '/dashboard/users': typeof AuthenticatedDashboardUsersRoute
+  '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/dashboard/announcements': typeof AuthenticatedDashboardAnnouncementsRoute
+  '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/dashboard/curriculum': typeof AuthenticatedDashboardCurriculumRoute
+  '/dashboard/exams': typeof AuthenticatedDashboardExamsRoute
+  '/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
+  '/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
+  '/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
+  '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/results': typeof AuthenticatedDashboardResultsRoute
+  '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
+  '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
+  '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
+  '/dashboard/users': typeof AuthenticatedDashboardUsersRoute
+  '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/dashboard/announcements': typeof AuthenticatedDashboardAnnouncementsRoute
+  '/_authenticated/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/_authenticated/dashboard/curriculum': typeof AuthenticatedDashboardCurriculumRoute
+  '/_authenticated/dashboard/exams': typeof AuthenticatedDashboardExamsRoute
+  '/_authenticated/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
+  '/_authenticated/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
+  '/_authenticated/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/_authenticated/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
+  '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/_authenticated/dashboard/results': typeof AuthenticatedDashboardResultsRoute
+  '/_authenticated/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
+  '/_authenticated/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/_authenticated/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
+  '/_authenticated/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
+  '/_authenticated/dashboard/users': typeof AuthenticatedDashboardUsersRoute
+  '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/sitemap.xml'
+    | '/dashboard'
+    | '/dashboard/announcements'
+    | '/dashboard/classes'
+    | '/dashboard/curriculum'
+    | '/dashboard/exams'
+    | '/dashboard/expenditures'
+    | '/dashboard/fees'
+    | '/dashboard/invoices'
+    | '/dashboard/my-children'
+    | '/dashboard/payments'
+    | '/dashboard/results'
+    | '/dashboard/students'
+    | '/dashboard/subjects'
+    | '/dashboard/teachers'
+    | '/dashboard/terms'
+    | '/dashboard/users'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/sitemap.xml'
+    | '/dashboard/announcements'
+    | '/dashboard/classes'
+    | '/dashboard/curriculum'
+    | '/dashboard/exams'
+    | '/dashboard/expenditures'
+    | '/dashboard/fees'
+    | '/dashboard/invoices'
+    | '/dashboard/my-children'
+    | '/dashboard/payments'
+    | '/dashboard/results'
+    | '/dashboard/students'
+    | '/dashboard/subjects'
+    | '/dashboard/teachers'
+    | '/dashboard/terms'
+    | '/dashboard/users'
+    | '/dashboard'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/sitemap.xml'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/dashboard/announcements'
+    | '/_authenticated/dashboard/classes'
+    | '/_authenticated/dashboard/curriculum'
+    | '/_authenticated/dashboard/exams'
+    | '/_authenticated/dashboard/expenditures'
+    | '/_authenticated/dashboard/fees'
+    | '/_authenticated/dashboard/invoices'
+    | '/_authenticated/dashboard/my-children'
+    | '/_authenticated/dashboard/payments'
+    | '/_authenticated/dashboard/results'
+    | '/_authenticated/dashboard/students'
+    | '/_authenticated/dashboard/subjects'
+    | '/_authenticated/dashboard/teachers'
+    | '/_authenticated/dashboard/terms'
+    | '/_authenticated/dashboard/users'
+    | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +325,193 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/dashboard/': {
+      id: '/_authenticated/dashboard/'
+      path: '/'
+      fullPath: '/dashboard/'
+      preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/users': {
+      id: '/_authenticated/dashboard/users'
+      path: '/users'
+      fullPath: '/dashboard/users'
+      preLoaderRoute: typeof AuthenticatedDashboardUsersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/terms': {
+      id: '/_authenticated/dashboard/terms'
+      path: '/terms'
+      fullPath: '/dashboard/terms'
+      preLoaderRoute: typeof AuthenticatedDashboardTermsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/teachers': {
+      id: '/_authenticated/dashboard/teachers'
+      path: '/teachers'
+      fullPath: '/dashboard/teachers'
+      preLoaderRoute: typeof AuthenticatedDashboardTeachersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/subjects': {
+      id: '/_authenticated/dashboard/subjects'
+      path: '/subjects'
+      fullPath: '/dashboard/subjects'
+      preLoaderRoute: typeof AuthenticatedDashboardSubjectsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/students': {
+      id: '/_authenticated/dashboard/students'
+      path: '/students'
+      fullPath: '/dashboard/students'
+      preLoaderRoute: typeof AuthenticatedDashboardStudentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/results': {
+      id: '/_authenticated/dashboard/results'
+      path: '/results'
+      fullPath: '/dashboard/results'
+      preLoaderRoute: typeof AuthenticatedDashboardResultsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/payments': {
+      id: '/_authenticated/dashboard/payments'
+      path: '/payments'
+      fullPath: '/dashboard/payments'
+      preLoaderRoute: typeof AuthenticatedDashboardPaymentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/my-children': {
+      id: '/_authenticated/dashboard/my-children'
+      path: '/my-children'
+      fullPath: '/dashboard/my-children'
+      preLoaderRoute: typeof AuthenticatedDashboardMyChildrenRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/invoices': {
+      id: '/_authenticated/dashboard/invoices'
+      path: '/invoices'
+      fullPath: '/dashboard/invoices'
+      preLoaderRoute: typeof AuthenticatedDashboardInvoicesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/fees': {
+      id: '/_authenticated/dashboard/fees'
+      path: '/fees'
+      fullPath: '/dashboard/fees'
+      preLoaderRoute: typeof AuthenticatedDashboardFeesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/expenditures': {
+      id: '/_authenticated/dashboard/expenditures'
+      path: '/expenditures'
+      fullPath: '/dashboard/expenditures'
+      preLoaderRoute: typeof AuthenticatedDashboardExpendituresRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/exams': {
+      id: '/_authenticated/dashboard/exams'
+      path: '/exams'
+      fullPath: '/dashboard/exams'
+      preLoaderRoute: typeof AuthenticatedDashboardExamsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/curriculum': {
+      id: '/_authenticated/dashboard/curriculum'
+      path: '/curriculum'
+      fullPath: '/dashboard/curriculum'
+      preLoaderRoute: typeof AuthenticatedDashboardCurriculumRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/classes': {
+      id: '/_authenticated/dashboard/classes'
+      path: '/classes'
+      fullPath: '/dashboard/classes'
+      preLoaderRoute: typeof AuthenticatedDashboardClassesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/announcements': {
+      id: '/_authenticated/dashboard/announcements'
+      path: '/announcements'
+      fullPath: '/dashboard/announcements'
+      preLoaderRoute: typeof AuthenticatedDashboardAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
+interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAnnouncementsRoute: typeof AuthenticatedDashboardAnnouncementsRoute
+  AuthenticatedDashboardClassesRoute: typeof AuthenticatedDashboardClassesRoute
+  AuthenticatedDashboardCurriculumRoute: typeof AuthenticatedDashboardCurriculumRoute
+  AuthenticatedDashboardExamsRoute: typeof AuthenticatedDashboardExamsRoute
+  AuthenticatedDashboardExpendituresRoute: typeof AuthenticatedDashboardExpendituresRoute
+  AuthenticatedDashboardFeesRoute: typeof AuthenticatedDashboardFeesRoute
+  AuthenticatedDashboardInvoicesRoute: typeof AuthenticatedDashboardInvoicesRoute
+  AuthenticatedDashboardMyChildrenRoute: typeof AuthenticatedDashboardMyChildrenRoute
+  AuthenticatedDashboardPaymentsRoute: typeof AuthenticatedDashboardPaymentsRoute
+  AuthenticatedDashboardResultsRoute: typeof AuthenticatedDashboardResultsRoute
+  AuthenticatedDashboardStudentsRoute: typeof AuthenticatedDashboardStudentsRoute
+  AuthenticatedDashboardSubjectsRoute: typeof AuthenticatedDashboardSubjectsRoute
+  AuthenticatedDashboardTeachersRoute: typeof AuthenticatedDashboardTeachersRoute
+  AuthenticatedDashboardTermsRoute: typeof AuthenticatedDashboardTermsRoute
+  AuthenticatedDashboardUsersRoute: typeof AuthenticatedDashboardUsersRoute
+  AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+}
+
+const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
+  {
+    AuthenticatedDashboardAnnouncementsRoute:
+      AuthenticatedDashboardAnnouncementsRoute,
+    AuthenticatedDashboardClassesRoute: AuthenticatedDashboardClassesRoute,
+    AuthenticatedDashboardCurriculumRoute:
+      AuthenticatedDashboardCurriculumRoute,
+    AuthenticatedDashboardExamsRoute: AuthenticatedDashboardExamsRoute,
+    AuthenticatedDashboardExpendituresRoute:
+      AuthenticatedDashboardExpendituresRoute,
+    AuthenticatedDashboardFeesRoute: AuthenticatedDashboardFeesRoute,
+    AuthenticatedDashboardInvoicesRoute: AuthenticatedDashboardInvoicesRoute,
+    AuthenticatedDashboardMyChildrenRoute:
+      AuthenticatedDashboardMyChildrenRoute,
+    AuthenticatedDashboardPaymentsRoute: AuthenticatedDashboardPaymentsRoute,
+    AuthenticatedDashboardResultsRoute: AuthenticatedDashboardResultsRoute,
+    AuthenticatedDashboardStudentsRoute: AuthenticatedDashboardStudentsRoute,
+    AuthenticatedDashboardSubjectsRoute: AuthenticatedDashboardSubjectsRoute,
+    AuthenticatedDashboardTeachersRoute: AuthenticatedDashboardTeachersRoute,
+    AuthenticatedDashboardTermsRoute: AuthenticatedDashboardTermsRoute,
+    AuthenticatedDashboardUsersRoute: AuthenticatedDashboardUsersRoute,
+    AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+  }
+
+const AuthenticatedDashboardRouteWithChildren =
+  AuthenticatedDashboardRoute._addFileChildren(
+    AuthenticatedDashboardRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
