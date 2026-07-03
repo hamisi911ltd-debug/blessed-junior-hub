@@ -44,3 +44,14 @@ export function useCrud(table: string) {
   });
   return { create, update, remove };
 }
+
+export function useLookup(table: string, labelCol: string, valueCol = "id") {
+  return useQuery({
+    queryKey: [table, "lookup", labelCol, valueCol],
+    queryFn: async () => {
+      const { data, error } = await supabase.from(table as any).select(`${valueCol}, ${labelCol}`).order(labelCol);
+      if (error) throw error;
+      return (data ?? []).map((r: any) => ({ value: r[valueCol], label: r[labelCol] }));
+    },
+  });
+}
