@@ -14,6 +14,9 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as AuthenticatedDashboardTermsRouteImport } from './routes/_authenticated/dashboard.terms'
+import { Route as AuthenticatedDashboardSubjectsRouteImport } from './routes/_authenticated/dashboard.subjects'
+import { Route as AuthenticatedDashboardClassesRouteImport } from './routes/_authenticated/dashboard.classes'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -40,16 +43,40 @@ const AuthenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardTermsRoute =
+  AuthenticatedDashboardTermsRouteImport.update({
+    id: '/terms',
+    path: '/terms',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardSubjectsRoute =
+  AuthenticatedDashboardSubjectsRouteImport.update({
+    id: '/subjects',
+    path: '/subjects',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardClassesRoute =
+  AuthenticatedDashboardClassesRouteImport.update({
+    id: '/classes',
+    path: '/classes',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesById {
@@ -58,19 +85,38 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/_authenticated/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/_authenticated/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/dashboard' | '/dashboard/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/dashboard/classes'
+    | '/dashboard/subjects'
+    | '/dashboard/terms'
+    | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard/classes'
+    | '/dashboard/subjects'
+    | '/dashboard/terms'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/dashboard/classes'
+    | '/_authenticated/dashboard/subjects'
+    | '/_authenticated/dashboard/terms'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
 }
@@ -117,15 +163,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/terms': {
+      id: '/_authenticated/dashboard/terms'
+      path: '/terms'
+      fullPath: '/dashboard/terms'
+      preLoaderRoute: typeof AuthenticatedDashboardTermsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/subjects': {
+      id: '/_authenticated/dashboard/subjects'
+      path: '/subjects'
+      fullPath: '/dashboard/subjects'
+      preLoaderRoute: typeof AuthenticatedDashboardSubjectsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/classes': {
+      id: '/_authenticated/dashboard/classes'
+      path: '/classes'
+      fullPath: '/dashboard/classes'
+      preLoaderRoute: typeof AuthenticatedDashboardClassesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardClassesRoute: typeof AuthenticatedDashboardClassesRoute
+  AuthenticatedDashboardSubjectsRoute: typeof AuthenticatedDashboardSubjectsRoute
+  AuthenticatedDashboardTermsRoute: typeof AuthenticatedDashboardTermsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardClassesRoute: AuthenticatedDashboardClassesRoute,
+    AuthenticatedDashboardSubjectsRoute: AuthenticatedDashboardSubjectsRoute,
+    AuthenticatedDashboardTermsRoute: AuthenticatedDashboardTermsRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
 
