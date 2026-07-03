@@ -15,8 +15,18 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardTermsRouteImport } from './routes/_authenticated/dashboard.terms'
+import { Route as AuthenticatedDashboardTeachersRouteImport } from './routes/_authenticated/dashboard.teachers'
 import { Route as AuthenticatedDashboardSubjectsRouteImport } from './routes/_authenticated/dashboard.subjects'
+import { Route as AuthenticatedDashboardStudentsRouteImport } from './routes/_authenticated/dashboard.students'
+import { Route as AuthenticatedDashboardResultsRouteImport } from './routes/_authenticated/dashboard.results'
+import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
+import { Route as AuthenticatedDashboardInvoicesRouteImport } from './routes/_authenticated/dashboard.invoices'
+import { Route as AuthenticatedDashboardFeesRouteImport } from './routes/_authenticated/dashboard.fees'
+import { Route as AuthenticatedDashboardExpendituresRouteImport } from './routes/_authenticated/dashboard.expenditures'
+import { Route as AuthenticatedDashboardExamsRouteImport } from './routes/_authenticated/dashboard.exams'
+import { Route as AuthenticatedDashboardCurriculumRouteImport } from './routes/_authenticated/dashboard.curriculum'
 import { Route as AuthenticatedDashboardClassesRouteImport } from './routes/_authenticated/dashboard.classes'
+import { Route as AuthenticatedDashboardAnnouncementsRouteImport } from './routes/_authenticated/dashboard.announcements'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -49,10 +59,64 @@ const AuthenticatedDashboardTermsRoute =
     path: '/terms',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardTeachersRoute =
+  AuthenticatedDashboardTeachersRouteImport.update({
+    id: '/teachers',
+    path: '/teachers',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardSubjectsRoute =
   AuthenticatedDashboardSubjectsRouteImport.update({
     id: '/subjects',
     path: '/subjects',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardStudentsRoute =
+  AuthenticatedDashboardStudentsRouteImport.update({
+    id: '/students',
+    path: '/students',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardResultsRoute =
+  AuthenticatedDashboardResultsRouteImport.update({
+    id: '/results',
+    path: '/results',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardPaymentsRoute =
+  AuthenticatedDashboardPaymentsRouteImport.update({
+    id: '/payments',
+    path: '/payments',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardInvoicesRoute =
+  AuthenticatedDashboardInvoicesRouteImport.update({
+    id: '/invoices',
+    path: '/invoices',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardFeesRoute =
+  AuthenticatedDashboardFeesRouteImport.update({
+    id: '/fees',
+    path: '/fees',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardExpendituresRoute =
+  AuthenticatedDashboardExpendituresRouteImport.update({
+    id: '/expenditures',
+    path: '/expenditures',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardExamsRoute =
+  AuthenticatedDashboardExamsRouteImport.update({
+    id: '/exams',
+    path: '/exams',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardCurriculumRoute =
+  AuthenticatedDashboardCurriculumRouteImport.update({
+    id: '/curriculum',
+    path: '/curriculum',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardClassesRoute =
@@ -61,21 +125,47 @@ const AuthenticatedDashboardClassesRoute =
     path: '/classes',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardAnnouncementsRoute =
+  AuthenticatedDashboardAnnouncementsRouteImport.update({
+    id: '/announcements',
+    path: '/announcements',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/dashboard/announcements': typeof AuthenticatedDashboardAnnouncementsRoute
   '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/dashboard/curriculum': typeof AuthenticatedDashboardCurriculumRoute
+  '/dashboard/exams': typeof AuthenticatedDashboardExamsRoute
+  '/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
+  '/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
+  '/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/results': typeof AuthenticatedDashboardResultsRoute
+  '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
   '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard/announcements': typeof AuthenticatedDashboardAnnouncementsRoute
   '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/dashboard/curriculum': typeof AuthenticatedDashboardCurriculumRoute
+  '/dashboard/exams': typeof AuthenticatedDashboardExamsRoute
+  '/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
+  '/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
+  '/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/results': typeof AuthenticatedDashboardResultsRoute
+  '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
   '/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
 }
@@ -85,8 +175,18 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/dashboard/announcements': typeof AuthenticatedDashboardAnnouncementsRoute
   '/_authenticated/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
+  '/_authenticated/dashboard/curriculum': typeof AuthenticatedDashboardCurriculumRoute
+  '/_authenticated/dashboard/exams': typeof AuthenticatedDashboardExamsRoute
+  '/_authenticated/dashboard/expenditures': typeof AuthenticatedDashboardExpendituresRoute
+  '/_authenticated/dashboard/fees': typeof AuthenticatedDashboardFeesRoute
+  '/_authenticated/dashboard/invoices': typeof AuthenticatedDashboardInvoicesRoute
+  '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/_authenticated/dashboard/results': typeof AuthenticatedDashboardResultsRoute
+  '/_authenticated/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/_authenticated/dashboard/subjects': typeof AuthenticatedDashboardSubjectsRoute
+  '/_authenticated/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
   '/_authenticated/dashboard/terms': typeof AuthenticatedDashboardTermsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
 }
@@ -96,16 +196,36 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/dashboard/announcements'
     | '/dashboard/classes'
+    | '/dashboard/curriculum'
+    | '/dashboard/exams'
+    | '/dashboard/expenditures'
+    | '/dashboard/fees'
+    | '/dashboard/invoices'
+    | '/dashboard/payments'
+    | '/dashboard/results'
+    | '/dashboard/students'
     | '/dashboard/subjects'
+    | '/dashboard/teachers'
     | '/dashboard/terms'
     | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/dashboard/announcements'
     | '/dashboard/classes'
+    | '/dashboard/curriculum'
+    | '/dashboard/exams'
+    | '/dashboard/expenditures'
+    | '/dashboard/fees'
+    | '/dashboard/invoices'
+    | '/dashboard/payments'
+    | '/dashboard/results'
+    | '/dashboard/students'
     | '/dashboard/subjects'
+    | '/dashboard/teachers'
     | '/dashboard/terms'
     | '/dashboard'
   id:
@@ -114,8 +234,18 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/dashboard/announcements'
     | '/_authenticated/dashboard/classes'
+    | '/_authenticated/dashboard/curriculum'
+    | '/_authenticated/dashboard/exams'
+    | '/_authenticated/dashboard/expenditures'
+    | '/_authenticated/dashboard/fees'
+    | '/_authenticated/dashboard/invoices'
+    | '/_authenticated/dashboard/payments'
+    | '/_authenticated/dashboard/results'
+    | '/_authenticated/dashboard/students'
     | '/_authenticated/dashboard/subjects'
+    | '/_authenticated/dashboard/teachers'
     | '/_authenticated/dashboard/terms'
     | '/_authenticated/dashboard/'
   fileRoutesById: FileRoutesById
@@ -170,11 +300,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardTermsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/teachers': {
+      id: '/_authenticated/dashboard/teachers'
+      path: '/teachers'
+      fullPath: '/dashboard/teachers'
+      preLoaderRoute: typeof AuthenticatedDashboardTeachersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/subjects': {
       id: '/_authenticated/dashboard/subjects'
       path: '/subjects'
       fullPath: '/dashboard/subjects'
       preLoaderRoute: typeof AuthenticatedDashboardSubjectsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/students': {
+      id: '/_authenticated/dashboard/students'
+      path: '/students'
+      fullPath: '/dashboard/students'
+      preLoaderRoute: typeof AuthenticatedDashboardStudentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/results': {
+      id: '/_authenticated/dashboard/results'
+      path: '/results'
+      fullPath: '/dashboard/results'
+      preLoaderRoute: typeof AuthenticatedDashboardResultsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/payments': {
+      id: '/_authenticated/dashboard/payments'
+      path: '/payments'
+      fullPath: '/dashboard/payments'
+      preLoaderRoute: typeof AuthenticatedDashboardPaymentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/invoices': {
+      id: '/_authenticated/dashboard/invoices'
+      path: '/invoices'
+      fullPath: '/dashboard/invoices'
+      preLoaderRoute: typeof AuthenticatedDashboardInvoicesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/fees': {
+      id: '/_authenticated/dashboard/fees'
+      path: '/fees'
+      fullPath: '/dashboard/fees'
+      preLoaderRoute: typeof AuthenticatedDashboardFeesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/expenditures': {
+      id: '/_authenticated/dashboard/expenditures'
+      path: '/expenditures'
+      fullPath: '/dashboard/expenditures'
+      preLoaderRoute: typeof AuthenticatedDashboardExpendituresRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/exams': {
+      id: '/_authenticated/dashboard/exams'
+      path: '/exams'
+      fullPath: '/dashboard/exams'
+      preLoaderRoute: typeof AuthenticatedDashboardExamsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/curriculum': {
+      id: '/_authenticated/dashboard/curriculum'
+      path: '/curriculum'
+      fullPath: '/dashboard/curriculum'
+      preLoaderRoute: typeof AuthenticatedDashboardCurriculumRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/classes': {
@@ -184,20 +377,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardClassesRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/announcements': {
+      id: '/_authenticated/dashboard/announcements'
+      path: '/announcements'
+      fullPath: '/dashboard/announcements'
+      preLoaderRoute: typeof AuthenticatedDashboardAnnouncementsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAnnouncementsRoute: typeof AuthenticatedDashboardAnnouncementsRoute
   AuthenticatedDashboardClassesRoute: typeof AuthenticatedDashboardClassesRoute
+  AuthenticatedDashboardCurriculumRoute: typeof AuthenticatedDashboardCurriculumRoute
+  AuthenticatedDashboardExamsRoute: typeof AuthenticatedDashboardExamsRoute
+  AuthenticatedDashboardExpendituresRoute: typeof AuthenticatedDashboardExpendituresRoute
+  AuthenticatedDashboardFeesRoute: typeof AuthenticatedDashboardFeesRoute
+  AuthenticatedDashboardInvoicesRoute: typeof AuthenticatedDashboardInvoicesRoute
+  AuthenticatedDashboardPaymentsRoute: typeof AuthenticatedDashboardPaymentsRoute
+  AuthenticatedDashboardResultsRoute: typeof AuthenticatedDashboardResultsRoute
+  AuthenticatedDashboardStudentsRoute: typeof AuthenticatedDashboardStudentsRoute
   AuthenticatedDashboardSubjectsRoute: typeof AuthenticatedDashboardSubjectsRoute
+  AuthenticatedDashboardTeachersRoute: typeof AuthenticatedDashboardTeachersRoute
   AuthenticatedDashboardTermsRoute: typeof AuthenticatedDashboardTermsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardAnnouncementsRoute:
+      AuthenticatedDashboardAnnouncementsRoute,
     AuthenticatedDashboardClassesRoute: AuthenticatedDashboardClassesRoute,
+    AuthenticatedDashboardCurriculumRoute:
+      AuthenticatedDashboardCurriculumRoute,
+    AuthenticatedDashboardExamsRoute: AuthenticatedDashboardExamsRoute,
+    AuthenticatedDashboardExpendituresRoute:
+      AuthenticatedDashboardExpendituresRoute,
+    AuthenticatedDashboardFeesRoute: AuthenticatedDashboardFeesRoute,
+    AuthenticatedDashboardInvoicesRoute: AuthenticatedDashboardInvoicesRoute,
+    AuthenticatedDashboardPaymentsRoute: AuthenticatedDashboardPaymentsRoute,
+    AuthenticatedDashboardResultsRoute: AuthenticatedDashboardResultsRoute,
+    AuthenticatedDashboardStudentsRoute: AuthenticatedDashboardStudentsRoute,
     AuthenticatedDashboardSubjectsRoute: AuthenticatedDashboardSubjectsRoute,
+    AuthenticatedDashboardTeachersRoute: AuthenticatedDashboardTeachersRoute,
     AuthenticatedDashboardTermsRoute: AuthenticatedDashboardTermsRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   }
