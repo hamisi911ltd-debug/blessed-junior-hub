@@ -1,20 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api-client";
 
 export type AppRole = "admin" | "bursar" | "teacher" | "parent" | "student";
 
 export function useRoles(userId: string | undefined) {
   return useQuery({
-    queryKey: ["roles", userId],
+    queryKey: ["auth-me"],
     enabled: !!userId,
-    queryFn: async (): Promise<AppRole[]> => {
-      const { data, error } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", userId!);
-      if (error) throw error;
-      return (data ?? []).map((r) => r.role as AppRole);
-    },
+    queryFn: () => api.auth.me(),
+    select: (data) => (data?.roles ?? []) as AppRole[],
+    staleTime: 60_000,
   });
 }
 

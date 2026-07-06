@@ -1,24 +1,21 @@
-import { useEffect, useState } from "react";
-import type { Session, User } from "@supabase/supabase-js";
-import { supabase } from "@/integrations/supabase/client";
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api-client";
+
+export interface AuthUser {
+  id: string;
+  email: string | null;
+  full_name: string;
+  phone: string | null;
+}
 
 export function useAuth() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const query = useQuery({
+    queryKey: ["auth-me"],
+    queryFn: () => api.auth.me(),
+    retry: false,
+    staleTime: 60_000,
+  });
 
-  useEffect(() => {
-    const { data: sub } = supabase.auth.onAuthStateChange((_e, s) => {
-      setSession(s);
-      setUser(s?.user ?? null);
-    });
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
-      setLoading(false);
-    });
-    return () => sub.subscription.unsubscribe();
-  }, []);
-
-  return { session, user, loading };
+  const user = query.data?.user ?? null;
+  return { session: user ? { user } : null, user: user as AuthUser | null, loading: query.isLoading };
 }

@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "blessed-junior-hub",
+  "compatibility_date": "2025-04-01",
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "blessed-junior-hub-db",
+      "database_id": "42b8a415-c344-41b4-8926-78903a12f12b"
+    }
+  ]
+}

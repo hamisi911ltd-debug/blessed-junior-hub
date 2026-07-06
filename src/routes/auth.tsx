@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, Link, redirect } from "@tanstack/react-router";
 import { useState } from "react";
-import { supabase } from "@/integrations/supabase/client";
+import { api, ApiError } from "@/lib/api-client";
+import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,8 +12,8 @@ import { School, ArrowLeft } from "lucide-react";
 export const Route = createFileRoute("/auth")({
   ssr: false,
   beforeLoad: async () => {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) throw redirect({ to: "/_authenticated/dashboard" as any });
+    const { user } = await api.auth.me();
+    if (user) throw redirect({ to: "/dashboard" });
   },
   component: AuthPage,
   head: () => ({ meta: [{ title: "Sign in — Blessed Junior School" }] }),
@@ -20,7 +21,9 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const nav = useNavigate();
+  const qc = useQueryClient();
   const [loading, setLoading] = useState(false);
+  const [identifier, setIdentifier] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
@@ -28,26 +31,31 @@ function AuthPage() {
   const onSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
-    setLoading(false);
-    if (error) return toast.error(error.message);
-    toast.success("Welcome back!");
-    nav({ to: "/_authenticated/dashboard" as any });
+    try {
+      await api.auth.signIn(identifier, password);
+      await qc.invalidateQueries({ queryKey: ["auth-me"] });
+      toast.success("Welcome back!");
+      nav({ to: "/dashboard" });
+    } catch (e) {
+      toast.error(e instanceof ApiError ? e.message : "Sign in failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
-      email, password,
-      options: {
-        emailRedirectTo: window.location.origin,
-        data: { full_name: fullName },
-      },
-    });
-    setLoading(false);
-    if (error) return toast.error(error.message);
-    toast.success("Account created — you can sign in now.");
+    try {
+      await api.auth.signUp(email, password, fullName);
+      await qc.invalidateQueries({ queryKey: ["auth-me"] });
+      toast.success("Account created — welcome!");
+      nav({ to: "/dashboard" });
+    } catch (e) {
+      toast.error(e instanceof ApiError ? e.message : "Sign up failed");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -71,9 +79,15 @@ function AuthPage() {
             </TabsList>
             <TabsContent value="signin">
               <form onSubmit={onSignIn} className="space-y-4 mt-4">
-                <div><Label>Email</Label><Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+                <div>
+                  <Label>Email or phone number</Label>
+                  <Input required value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="you@school.com or 07XX XXX XXX" />
+                </div>
                 <div><Label>Password</Label><Input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} /></div>
                 <Button disabled={loading} className="w-full bg-brand-gradient text-brand-foreground">Sign in</Button>
+                <p className="text-xs text-muted-foreground text-center">
+                  Parents &amp; guardians: sign in with your phone number and your child's admission number as password.
+                </p>
               </form>
             </TabsContent>
             <TabsContent value="signup">
@@ -83,7 +97,8 @@ function AuthPage() {
                 <div><Label>Password</Label><Input type="password" required minLength={6} value={password} onChange={(e) => setPassword(e.target.value)} /></div>
                 <Button disabled={loading} className="w-full bg-brand-gradient text-brand-foreground">Create account</Button>
                 <p className="text-xs text-muted-foreground text-center">
-                  The first person to sign up automatically becomes the school Admin.
+                  For school staff. The first person to sign up automatically becomes the school Admin.
+                  Parents don't need to sign up — a portal login is created automatically when a child is enrolled.
                 </p>
               </form>
             </TabsContent>

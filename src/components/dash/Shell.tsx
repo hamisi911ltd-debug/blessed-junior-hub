@@ -1,37 +1,44 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useAuth } from "@/hooks/useAuth";
-import { useRoles, isStaff, isAdmin, isBursar, isParent, isStudent, isTeacher } from "@/hooks/useRoles";
-import { supabase } from "@/integrations/supabase/client";
+import { useRoles, isStaff, isAdmin, isBursar, isParent } from "@/hooks/useRoles";
+import { api } from "@/lib/api-client";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 import {
-  LayoutDashboard, Users, GraduationCap, BookOpen, School, Calendar,
-  ClipboardList, DollarSign, Receipt, Wallet, Megaphone, UserCog,
-  Baby, LogOut, BookMarked, TrendingDown,
+  LayoutDashboard, Users, School, UserCog,
+  Wallet, ClipboardList, Megaphone, Settings,
+  Baby, LogOut, Menu,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 
 type NavItem = { to: string; label: string; icon: ReactNode; show?: (r: string[]) => boolean };
 
 const NAV: NavItem[] = [
-  { to: "/_authenticated/dashboard", label: "Overview", icon: <LayoutDashboard className="h-4 w-4" /> },
-  { to: "/_authenticated/dashboard/students", label: "Students", icon: <Users className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/_authenticated/dashboard/teachers", label: "Teachers", icon: <GraduationCap className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/_authenticated/dashboard/classes", label: "Classes", icon: <School className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/_authenticated/dashboard/subjects", label: "Subjects", icon: <BookOpen className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/_authenticated/dashboard/curriculum", label: "Curriculum", icon: <BookMarked className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/_authenticated/dashboard/terms", label: "Terms", icon: <Calendar className="h-4 w-4" />, show: (r) => isAdmin(r as any) },
-  { to: "/_authenticated/dashboard/exams", label: "Exams", icon: <ClipboardList className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/_authenticated/dashboard/results", label: "Results", icon: <ClipboardList className="h-4 w-4" /> },
-  { to: "/_authenticated/dashboard/fees", label: "Fee structures", icon: <DollarSign className="h-4 w-4" />, show: (r) => isAdmin(r as any) || isBursar(r as any) },
-  { to: "/_authenticated/dashboard/invoices", label: "Invoices", icon: <Receipt className="h-4 w-4" /> },
-  { to: "/_authenticated/dashboard/payments", label: "Payments", icon: <Wallet className="h-4 w-4" /> },
-  { to: "/_authenticated/dashboard/expenditures", label: "Expenditure", icon: <TrendingDown className="h-4 w-4" />, show: (r) => isAdmin(r as any) || isBursar(r as any) },
-  { to: "/_authenticated/dashboard/announcements", label: "Announcements", icon: <Megaphone className="h-4 w-4" /> },
-  { to: "/_authenticated/dashboard/my-children", label: "My children", icon: <Baby className="h-4 w-4" />, show: (r) => isParent(r as any) || isStudent(r as any) || isTeacher(r as any) === false },
-  { to: "/_authenticated/dashboard/users", label: "Users & roles", icon: <UserCog className="h-4 w-4" />, show: (r) => isAdmin(r as any) },
+  { to: "/dashboard", label: "Overview", icon: <LayoutDashboard className="h-4 w-4" /> },
+  { to: "/dashboard/students", label: "Students", icon: <Users className="h-4 w-4" />, show: (r) => isStaff(r as any) },
+  { to: "/dashboard/classes", label: "Classes & Subjects", icon: <School className="h-4 w-4" />, show: (r) => isStaff(r as any) },
+  { to: "/dashboard/teachers", label: "Staff & Roles", icon: <UserCog className="h-4 w-4" />, show: (r) => isStaff(r as any) },
+  { to: "/dashboard/payments", label: "Payments", icon: <Wallet className="h-4 w-4" /> },
+  { to: "/dashboard/marks", label: "Marks & Reports", icon: <ClipboardList className="h-4 w-4" /> },
+  { to: "/dashboard/sms", label: "SMS Broadcast", icon: <Megaphone className="h-4 w-4" /> },
+  { to: "/dashboard/settings", label: "Settings", icon: <Settings className="h-4 w-4" />, show: (r) => isAdmin(r as any) || isBursar(r as any) },
+  { to: "/dashboard/my-children", label: "My children", icon: <Baby className="h-4 w-4" />, show: (r) => isParent(r as any) },
 ];
+
+function NavLinks({ items, active, onNavigate }: { items: NavItem[]; active: (to: string) => boolean; onNavigate?: () => void }) {
+  return (
+    <nav className="flex-1 p-3 space-y-1 overflow-auto">
+      {items.map((i) => (
+        <Link key={i.to} to={i.to as any} onClick={onNavigate}
+          className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${active(i.to) ? "bg-sidebar-primary text-sidebar-primary-foreground" : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"}`}>
+          {i.icon}{i.label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 
 export function DashShell({ children, title, subtitle, actions }: { children: ReactNode; title: string; subtitle?: string; actions?: ReactNode }) {
   const { user } = useAuth();
@@ -39,38 +46,30 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
   const nav = useNavigate();
   const qc = useQueryClient();
   const loc = useLocation();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const items = NAV.filter((i) => !i.show || i.show(roles));
+  const isActive = (to: string) => loc.pathname === to || (to !== "/dashboard" && loc.pathname.startsWith(to));
 
   const signOut = async () => {
     await qc.cancelQueries();
+    await api.auth.signOut();
     qc.clear();
-    await supabase.auth.signOut();
     toast.success("Signed out");
     nav({ to: "/auth", replace: true });
   };
 
   return (
-    <div className="min-h-screen grid md:grid-cols-[260px_1fr] bg-secondary/30">
+    <div className="min-h-screen md:grid md:grid-cols-[260px_1fr] bg-secondary/30">
       <aside className="hidden md:flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
         <Link to="/" className="flex items-center gap-2 px-5 h-16 border-b border-sidebar-border">
           <span className="grid h-9 w-9 place-items-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><School className="h-5 w-5" /></span>
           <span className="font-display font-bold">Blessed Junior</span>
         </Link>
-        <nav className="flex-1 p-3 space-y-1 overflow-auto">
-          {items.map((i) => {
-            const active = loc.pathname === i.to || (i.to !== "/_authenticated/dashboard" && loc.pathname.startsWith(i.to));
-            return (
-              <Link key={i.to} to={i.to as any}
-                className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition ${active ? "bg-sidebar-primary text-sidebar-primary-foreground" : "text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"}`}>
-                {i.icon}{i.label}
-              </Link>
-            );
-          })}
-        </nav>
+        <NavLinks items={items} active={isActive} />
         <div className="p-3 border-t border-sidebar-border">
           <div className="px-3 py-2 text-xs">
-            <div className="font-medium truncate">{user?.email}</div>
+            <div className="font-medium truncate">{user?.email ?? user?.phone}</div>
             <div className="opacity-70 mt-0.5">{roles.join(", ") || "no role"}</div>
           </div>
           <Button variant="ghost" onClick={signOut} className="w-full justify-start text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent">
@@ -78,15 +77,54 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
           </Button>
         </div>
       </aside>
+
+      <div className="flex md:hidden items-center justify-between h-14 px-4 border-b bg-sidebar text-sidebar-foreground sticky top-0 z-40">
+        <Link to="/" className="flex items-center gap-2">
+          <span className="grid h-8 w-8 place-items-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><School className="h-4 w-4" /></span>
+          <span className="font-display font-bold text-sm">Blessed Junior</span>
+        </Link>
+        <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="text-sidebar-foreground">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 flex flex-col bg-sidebar text-sidebar-foreground w-72">
+            <SheetHeader className="px-5 h-16 flex-row items-center border-b border-sidebar-border space-y-0 text-left">
+              <SheetTitle className="text-sidebar-foreground font-display">Blessed Junior</SheetTitle>
+            </SheetHeader>
+            <NavLinks items={items} active={isActive} onNavigate={() => setMobileOpen(false)} />
+            <div className="p-3 border-t border-sidebar-border">
+              <div className="px-3 py-2 text-xs">
+                <div className="font-medium truncate">{user?.email ?? user?.phone}</div>
+                <div className="opacity-70 mt-0.5">{roles.join(", ") || "no role"}</div>
+              </div>
+              <SheetClose asChild>
+                <Button variant="ghost" onClick={signOut} className="w-full justify-start text-sidebar-foreground/80 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent">
+                  <LogOut className="h-4 w-4 mr-2" /> Sign out
+                </Button>
+              </SheetClose>
+            </div>
+          </SheetContent>
+        </Sheet>
+      </div>
+
       <main className="flex flex-col min-w-0">
-        <header className="h-16 border-b bg-card px-6 flex items-center justify-between">
+        <header className="hidden md:flex h-16 border-b bg-card px-6 items-center justify-between">
           <div>
             <h1 className="text-xl font-display font-bold">{title}</h1>
             {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
           </div>
           <div className="flex items-center gap-2">{actions}</div>
         </header>
-        <div className="p-6">{children}</div>
+        <div className="md:hidden px-4 pt-4 flex items-center justify-between gap-2">
+          <div>
+            <h1 className="text-lg font-display font-bold">{title}</h1>
+            {subtitle && <p className="text-xs text-muted-foreground">{subtitle}</p>}
+          </div>
+          {actions && <div className="flex items-center gap-2">{actions}</div>}
+        </div>
+        <div className="p-4 md:p-6">{children}</div>
       </main>
     </div>
   );

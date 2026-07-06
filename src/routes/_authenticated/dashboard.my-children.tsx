@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DashShell } from "@/components/dash/Shell";
 import { useAuth } from "@/hooks/useAuth";
+import { useLookupMap } from "@/hooks/useLookupMap";
 import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { api } from "@/lib/api-client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -13,15 +14,15 @@ export const Route = createFileRoute("/_authenticated/dashboard/my-children")({
 
 function Page() {
   const { user } = useAuth();
+  const { map: classesById } = useLookupMap<{ name: string }>("classes");
   const { data: children = [] } = useQuery({
     queryKey: ["my-children", user?.id],
     enabled: !!user,
     queryFn: async () => {
-      const { data: links } = await supabase.from("parent_students").select("student_id").eq("parent_id", user!.id);
-      const ids = (links ?? []).map((l: any) => l.student_id);
+      const links = await api.list<{ student_id: string }>("parent_students", { eq: { parent_id: user!.id }, select: "student_id" });
+      const ids = links.map((l) => l.student_id);
       if (!ids.length) return [];
-      const { data } = await supabase.from("students").select("*, classes(name)").in("id", ids);
-      return data ?? [];
+      return api.list<any>("students", { in: { id: ids } });
     },
   });
 
@@ -33,50 +34,49 @@ function Page() {
         </div>
       )}
       <div className="grid gap-4">
-        {children.map((c: any) => <ChildCard key={c.id} student={c} />)}
+        {children.map((c: any) => (
+          <ChildCard key={c.id} student={c} className={classesById.get(c.class_id)?.name} />
+        ))}
       </div>
     </DashShell>
   );
 }
 
-function ChildCard({ student }: { student: any }) {
-  const { data: invoices = [] } = useQuery({
-    queryKey: ["child-invoices", student.id],
-    queryFn: async () => {
-      const { data } = await supabase.from("invoices").select("*").eq("student_id", student.id).order("created_at", { ascending: false });
-      return data ?? [];
-    },
+function ChildCard({ student, className }: { student: any; className?: string }) {
+  const { data: payments = [] } = useQuery({
+    queryKey: ["child-payments", student.id],
+    queryFn: async () => api.list<any>("payments", { eq: { student_id: student.id }, orderBy: "created_at", ascending: false }),
   });
   const { data: results = [] } = useQuery({
     queryKey: ["child-results", student.id],
-    queryFn: async () => {
-      const { data } = await supabase.from("results").select("*, subjects(name), exams(name)").eq("student_id", student.id);
-      return data ?? [];
-    },
+    queryFn: async () => api.list<any>("results", { eq: { student_id: student.id } }),
   });
+  const { map: subjectsById } = useLookupMap<{ name: string }>("subjects");
+  const { map: examsById } = useLookupMap<{ name: string }>("exams");
+  const { map: termsById } = useLookupMap<{ name: string }>("terms");
 
   return (
     <Card className="shadow-card">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>{student.full_name}</span>
-          <Badge variant="secondary">{student.classes?.name ?? "No class"}</Badge>
+          <Badge variant="secondary">{className ?? "No class"}</Badge>
         </CardTitle>
         <div className="text-sm text-muted-foreground">Admission No: {student.admission_no}</div>
       </CardHeader>
       <CardContent className="space-y-6">
         <section>
-          <h3 className="font-semibold mb-2">Recent invoices</h3>
-          {invoices.length === 0 ? <p className="text-sm text-muted-foreground">No invoices yet.</p> : (
+          <h3 className="font-semibold mb-2">Recent payments</h3>
+          {payments.length === 0 ? <p className="text-sm text-muted-foreground">No payments recorded yet.</p> : (
             <Table>
-              <TableHeader><TableRow><TableHead>Amount</TableHead><TableHead>Paid</TableHead><TableHead>Due</TableHead><TableHead>Status</TableHead></TableRow></TableHeader>
+              <TableHeader><TableRow><TableHead>Amount</TableHead><TableHead>Term</TableHead><TableHead>Date paid</TableHead><TableHead>Method</TableHead></TableRow></TableHeader>
               <TableBody>
-                {invoices.map((i: any) => (
-                  <TableRow key={i.id}>
-                    <TableCell>{i.amount}</TableCell>
-                    <TableCell>{i.amount_paid}</TableCell>
-                    <TableCell>{i.due_date ?? "—"}</TableCell>
-                    <TableCell><Badge variant={i.status === "paid" ? "default" : "outline"}>{i.status}</Badge></TableCell>
+                {payments.map((p: any) => (
+                  <TableRow key={p.id}>
+                    <TableCell>KES {Number(p.amount).toLocaleString()}</TableCell>
+                    <TableCell>{termsById.get(p.term_id)?.name ?? "—"}</TableCell>
+                    <TableCell>{p.paid_at?.slice(0, 10) ?? "—"}</TableCell>
+                    <TableCell><Badge variant="outline">{p.method}</Badge></TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -91,8 +91,8 @@ function ChildCard({ student }: { student: any }) {
               <TableBody>
                 {results.map((r: any) => (
                   <TableRow key={r.id}>
-                    <TableCell>{r.exams?.name}</TableCell>
-                    <TableCell>{r.subjects?.name}</TableCell>
+                    <TableCell>{examsById.get(r.exam_id)?.name}</TableCell>
+                    <TableCell>{subjectsById.get(r.subject_id)?.name}</TableCell>
                     <TableCell>{r.score} / {r.max_score}</TableCell>
                     <TableCell>{r.grade ?? "—"}</TableCell>
                   </TableRow>
