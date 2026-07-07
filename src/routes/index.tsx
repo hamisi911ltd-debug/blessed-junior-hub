@@ -59,13 +59,13 @@ function Header() {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero">
-      <div className="mx-auto max-w-7xl px-6 py-20 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+      <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 md:pt-10 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs font-medium">
             <Sparkles className="h-3.5 w-3.5 text-[color:var(--accent-2)]" />
             Enrolling for the new term now
           </div>
-          <h1 className="mt-6 text-5xl md:text-6xl font-extrabold leading-[1.05]">
+          <h1 className="mt-4 text-5xl md:text-6xl font-extrabold leading-[1.05]">
             Raising tomorrow's <span className="text-primary">leaders</span>.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl">
@@ -90,7 +90,7 @@ function Hero() {
         <div className="relative">
           <div className="aspect-[4/5] rounded-3xl bg-brand-gradient shadow-glow p-2 rotate-2 hover:rotate-0 transition-transform duration-500">
             <img
-              src="https://images.unsplash.com/photo-1543689604-6fe8dbcd1f59?q=80&w=900&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1548102245-c79dbcfa9f92?q=80&w=900&auto=format&fit=crop"
               alt="Learners at Mombasa Kiongozi Academy"
               className="h-full w-full rounded-[22px] object-cover"
             />
@@ -100,7 +100,7 @@ function Hero() {
           </div>
           <div className="absolute -top-6 -right-4 hidden sm:block w-32 aspect-square rounded-2xl overflow-hidden border-4 border-background shadow-card rotate-6">
             <img
-              src="https://images.unsplash.com/photo-1617056239820-8ce90ba48193?q=80&w=300&auto=format&fit=crop"
+              src="https://images.unsplash.com/photo-1547226633-bb220b1b972c?q=80&w=300&auto=format&fit=crop"
               alt="Pupil in school uniform"
               className="h-full w-full object-cover"
             />
@@ -250,12 +250,12 @@ function Life() {
     {
       t: "Reading Culture",
       d: "Daily library time and reading challenges.",
-      img: "https://images.unsplash.com/photo-1666281269793-da06484657e8?q=80&w=800&auto=format&fit=crop",
+      img: "https://images.unsplash.com/photo-1576108700272-8d9f86c51273?q=80&w=800&auto=format&fit=crop",
     },
     {
       t: "Sports Day",
       d: "Termly inter-house competitions on our playgrounds.",
-      img: "https://images.unsplash.com/photo-1623743995364-03fbd84dbaf3?q=80&w=800&auto=format&fit=crop",
+      img: "https://images.unsplash.com/photo-1591502843994-4d9433685765?q=80&w=800&auto=format&fit=crop",
     },
     {
       t: "Music & Drama",
@@ -282,10 +282,10 @@ function Life() {
       </div>
       <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          "https://images.unsplash.com/photo-1473649085228-583485e6e4d7?q=80&w=500&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1521493959102-bdd6677fdd81?q=80&w=500&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=500&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1632932693914-89b90ae3d16d?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1547082661-71362fc3969c?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1547226706-af7e2c20bcea?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1591502843994-4d9433685765?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1548102245-c79dbcfa9f92?q=80&w=500&auto=format&fit=crop",
         ].map((src) => (
           <div key={src} className="aspect-square rounded-xl overflow-hidden border border-border">
             <img src={src} alt="Learners at Mombasa Kiongozi Academy" className="h-full w-full object-cover hover:scale-105 transition duration-500" />
