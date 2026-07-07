@@ -64,7 +64,7 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
       <aside className="hidden md:flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
         <Link to="/" className="flex items-center gap-2 px-5 h-16 border-b border-sidebar-border">
           <span className="grid h-9 w-9 place-items-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><School className="h-5 w-5" /></span>
-          <span className="font-display font-bold">Blessed Junior</span>
+          <span className="font-display font-bold">Kiongozi Academy</span>
         </Link>
         <NavLinks items={items} active={isActive} />
         <div className="p-3 border-t border-sidebar-border">
@@ -81,7 +81,7 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
       <div className="flex md:hidden items-center justify-between h-14 px-4 border-b bg-sidebar text-sidebar-foreground sticky top-0 z-40">
         <Link to="/" className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><School className="h-4 w-4" /></span>
-          <span className="font-display font-bold text-sm">Blessed Junior</span>
+          <span className="font-display font-bold text-sm">Kiongozi Academy</span>
         </Link>
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
           <SheetTrigger asChild>
@@ -91,7 +91,7 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
           </SheetTrigger>
           <SheetContent side="left" className="p-0 flex flex-col bg-sidebar text-sidebar-foreground w-72">
             <SheetHeader className="px-5 h-16 flex-row items-center border-b border-sidebar-border space-y-0 text-left">
-              <SheetTitle className="text-sidebar-foreground font-display">Blessed Junior</SheetTitle>
+              <SheetTitle className="text-sidebar-foreground font-display">Kiongozi Academy</SheetTitle>
             </SheetHeader>
             <NavLinks items={items} active={isActive} onNavigate={() => setMobileOpen(false)} />
             <div className="p-3 border-t border-sidebar-border">

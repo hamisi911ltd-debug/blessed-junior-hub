@@ -66,7 +66,7 @@ function Overview() {
       </div>
 
       <div className="mt-8 rounded-2xl border bg-card p-6 shadow-card">
-        <div className="font-display font-semibold text-lg">Welcome to Blessed Junior School</div>
+        <div className="font-display font-semibold text-lg">Welcome to Mombasa Kiongozi Academy</div>
         <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
           Use the sidebar to manage students, teachers, classes, fees, results and more. Parents can
           jump to <b>My children</b> to view their child's records.

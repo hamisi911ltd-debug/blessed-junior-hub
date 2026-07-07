@@ -16,7 +16,7 @@ export const Route = createFileRoute("/auth")({
     if (user) throw redirect({ to: "/dashboard" });
   },
   component: AuthPage,
-  head: () => ({ meta: [{ title: "Sign in — Blessed Junior School" }] }),
+  head: () => ({ meta: [{ title: "Sign in — Mombasa Kiongozi Academy" }] }),
 });
 
 function AuthPage() {
@@ -68,7 +68,7 @@ function AuthPage() {
           <div className="flex items-center gap-2 mb-6">
             <span className="grid h-10 w-10 place-items-center rounded-lg bg-brand-gradient text-brand-foreground"><School className="h-5 w-5" /></span>
             <div>
-              <div className="font-display font-bold text-lg">Blessed Junior School</div>
+              <div className="font-display font-bold text-lg">Mombasa Kiongozi Academy</div>
               <div className="text-xs text-muted-foreground">School Management Portal</div>
             </div>
           </div>

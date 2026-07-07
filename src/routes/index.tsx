@@ -36,7 +36,7 @@ function Header() {
           <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-gradient text-brand-foreground shadow-glow">
             <School className="h-5 w-5" />
           </span>
-          <span>Blessed Junior <span className="text-primary">School</span></span>
+          <span>Mombasa Kiongozi <span className="text-primary">Academy</span></span>
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="#about" className="hover:text-primary transition">About</a>
@@ -66,12 +66,12 @@ function Hero() {
             Enrolling for the new term now
           </div>
           <h1 className="mt-6 text-5xl md:text-6xl font-extrabold leading-[1.05]">
-            Where bright minds <span className="text-primary">bloom</span>.
+            Raising tomorrow's <span className="text-primary">leaders</span>.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl">
-            Blessed Junior School in Magongo Kwahola provides a nurturing, modern
-            learning environment where every child discovers curiosity,
-            confidence and character.
+            Mombasa Kiongozi Academy provides a nurturing, CBC-aligned learning
+            environment in Mombasa, Kenya, where every learner discovers curiosity,
+            confidence and the character of a true "Kiongozi" — a leader.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button asChild size="lg" className="bg-brand-gradient text-brand-foreground shadow-glow">
@@ -81,45 +81,33 @@ function Hero() {
               <Link to="/auth">Parent & Staff Portal</Link>
             </Button>
           </div>
-          <div className="mt-8 flex items-center gap-6 text-sm text-muted-foreground">
+          <div className="mt-8 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
             <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Qualified teachers</span>
             <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Safe campus</span>
-            <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Modern curriculum</span>
+            <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> CBC curriculum</span>
           </div>
         </div>
         <div className="relative">
-          <div className="aspect-[4/5] rounded-3xl bg-brand-gradient shadow-glow p-1 rotate-2 hover:rotate-0 transition-transform duration-500">
-            <div className="h-full w-full rounded-[22px] bg-card p-8 flex flex-col justify-between">
-              <div className="grid grid-cols-2 gap-4">
-                <MiniStat icon={<Users className="h-5 w-5" />} label="Learners" value="480+" />
-                <MiniStat icon={<GraduationCap className="h-5 w-5" />} label="Educators" value="32" />
-                <MiniStat icon={<Trophy className="h-5 w-5" />} label="Awards" value="45" />
-                <MiniStat icon={<BookOpen className="h-5 w-5" />} label="Subjects" value="14" />
-              </div>
-              <div className="rounded-2xl bg-secondary p-5">
-                <div className="text-xs text-muted-foreground uppercase tracking-wider">Motto</div>
-                <div className="mt-1 font-display text-xl font-semibold">
-                  "Learn. Serve. Shine."
-                </div>
-              </div>
-            </div>
+          <div className="aspect-[4/5] rounded-3xl bg-brand-gradient shadow-glow p-2 rotate-2 hover:rotate-0 transition-transform duration-500">
+            <img
+              src="https://images.unsplash.com/photo-1543689604-6fe8dbcd1f59?q=80&w=900&auto=format&fit=crop"
+              alt="Learners at Mombasa Kiongozi Academy"
+              className="h-full w-full rounded-[22px] object-cover"
+            />
           </div>
           <div className="absolute -bottom-6 -left-6 rounded-2xl bg-[color:var(--accent-2)] text-[color:var(--primary-foreground)] px-4 py-3 shadow-card font-semibold rotate-[-4deg]">
             🎉 CBC-aligned
           </div>
+          <div className="absolute -top-6 -right-4 hidden sm:block w-32 aspect-square rounded-2xl overflow-hidden border-4 border-background shadow-card rotate-6">
+            <img
+              src="https://images.unsplash.com/photo-1617056239820-8ce90ba48193?q=80&w=300&auto=format&fit=crop"
+              alt="Pupil in school uniform"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
       </div>
     </section>
-  );
-}
-
-function MiniStat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
-  return (
-    <div className="rounded-2xl border border-border bg-background p-4">
-      <div className="text-primary">{icon}</div>
-      <div className="mt-3 text-2xl font-bold font-display">{value}</div>
-      <div className="text-xs text-muted-foreground">{label}</div>
-    </div>
   );
 }
 
@@ -128,7 +116,7 @@ function Stats() {
     { v: "98%", l: "Parent satisfaction" },
     { v: "1:15", l: "Teacher to pupil" },
     { v: "14+", l: "Extra-curricular clubs" },
-    { v: "25", l: "Years of excellence" },
+    { v: "Mombasa", l: "Proudly Kenyan, coastal roots" },
   ];
   return (
     <section className="border-y border-border bg-secondary/40">
@@ -150,18 +138,19 @@ function About() {
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <div>
           <div className="text-xs uppercase tracking-widest text-primary font-semibold">About us</div>
-          <h2 className="mt-3 text-4xl font-bold">A caring school shaping brilliant futures.</h2>
+          <h2 className="mt-3 text-4xl font-bold">A caring academy shaping brilliant futures.</h2>
           <p className="mt-5 text-muted-foreground text-lg">
-            Founded to bring quality education closer to the community of Magongo
-            Kwahola, Blessed Junior School blends a rigorous academic program
-            with values of kindness, curiosity and service.
+            Mombasa Kiongozi Academy brings quality, values-driven education to the
+            community of Mombasa. "Kiongozi" means leader in Swahili — and our mission
+            is to nurture confident, capable leaders through a rigorous Competency
+            Based Curriculum (CBC) balanced with kindness, curiosity and service.
           </p>
           <ul className="mt-6 space-y-3 text-sm">
             {[
-              "Structured curriculum from Baby Class through Primary 7",
-              "Certified teachers with continuous training",
+              "Structured CBC curriculum from Playgroup through Junior School",
+              "Certified teachers with continuous professional training",
               "Safe, spacious campus with library, ICT lab & playgrounds",
-              "Active parent-teacher engagement",
+              "Active parent-teacher engagement and community events",
             ].map((t) => (
               <li key={t} className="flex items-start gap-2">
                 <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" /> <span>{t}</span>
@@ -192,12 +181,12 @@ function Feature({ icon, title, desc }: { icon: React.ReactNode; title: string; 
 
 function Programs() {
   const progs = [
-    { icon: <Sun />, title: "Early Years", desc: "Baby, Middle & Top Class — play-based discovery." },
-    { icon: <BookOpen />, title: "Lower Primary", desc: "P1–P3, building reading, writing & numeracy." },
-    { icon: <GraduationCap />, title: "Upper Primary", desc: "P4–P7, preparing pupils for PLE excellence." },
+    { icon: <Sun />, title: "Early Years", desc: "Playgroup, PP1 & PP2 — play-based discovery." },
+    { icon: <BookOpen />, title: "Lower Primary", desc: "Grade 1–3, building reading, writing & numeracy." },
+    { icon: <GraduationCap />, title: "Upper Primary", desc: "Grade 4–6, preparing learners for KPSEA excellence." },
     { icon: <Music />, title: "Arts & Music", desc: "Choir, drama, dance and craft clubs." },
     { icon: <Microscope />, title: "STEM", desc: "Science lab, coding & robotics starter club." },
-    { icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & gymnastics." },
+    { icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & swimming." },
   ];
   return (
     <section id="programs" className="bg-secondary/40 py-20">
@@ -206,7 +195,7 @@ function Programs() {
           <div className="text-xs uppercase tracking-widest text-primary font-semibold">Programs</div>
           <h2 className="mt-3 text-4xl font-bold">A well-rounded education</h2>
           <p className="mt-4 text-muted-foreground">
-            We follow the national CBC framework, enriched with creative arts,
+            We follow Kenya's national CBC framework, enriched with creative arts,
             sports and STEM.
           </p>
         </div>
@@ -239,9 +228,9 @@ function WhyUs() {
           </div>
           <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
             {[
-              ["Consistent PLE performance", "Top-tier results year after year."],
+              ["Consistent academic performance", "Top-tier CBC results year after year."],
               ["Small classes", "Every learner is seen and known."],
-              ["Character formation", "Values woven into every lesson."],
+              ["Character formation", "Leadership and values woven into every lesson."],
               ["Modern facilities", "Library, ICT lab, health room."],
             ].map(([t, d]) => (
               <div key={t} className="rounded-2xl bg-background/10 backdrop-blur border border-white/20 p-5">
@@ -257,6 +246,23 @@ function WhyUs() {
 }
 
 function Life() {
+  const cards = [
+    {
+      t: "Reading Culture",
+      d: "Daily library time and reading challenges.",
+      img: "https://images.unsplash.com/photo-1666281269793-da06484657e8?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      t: "Sports Day",
+      d: "Termly inter-house competitions on our playgrounds.",
+      img: "https://images.unsplash.com/photo-1623743995364-03fbd84dbaf3?q=80&w=800&auto=format&fit=crop",
+    },
+    {
+      t: "Music & Drama",
+      d: "Performances every term for the whole community.",
+      img: "https://images.unsplash.com/photo-1548102249-acdce64fffbd?q=80&w=800&auto=format&fit=crop",
+    },
+  ];
   return (
     <section id="life" className="mx-auto max-w-7xl px-6 py-20">
       <div className="text-center max-w-2xl mx-auto">
@@ -264,17 +270,25 @@ function Life() {
         <h2 className="mt-3 text-4xl font-bold">Every day is an adventure</h2>
       </div>
       <div className="mt-12 grid md:grid-cols-3 gap-6">
-        {[
-          { t: "Reading Culture", d: "Daily library time and reading challenges.", h: "160" },
-          { t: "Sports Day", d: "Termly inter-house competitions.", h: "220" },
-          { t: "Music & Drama", d: "Performances every term for the whole community.", h: "180" },
-        ].map((c) => (
+        {cards.map((c) => (
           <div key={c.t} className="rounded-2xl overflow-hidden border border-border shadow-card">
-            <div style={{ height: c.h + "px" }} className="bg-brand-gradient" />
+            <img src={c.img} alt={c.t} className="h-44 w-full object-cover" />
             <div className="p-5">
               <div className="font-semibold">{c.t}</div>
               <div className="text-sm text-muted-foreground mt-1">{c.d}</div>
             </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
+        {[
+          "https://images.unsplash.com/photo-1473649085228-583485e6e4d7?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1521493959102-bdd6677fdd81?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1632932693914-89b90ae3d16d?q=80&w=500&auto=format&fit=crop",
+        ].map((src) => (
+          <div key={src} className="aspect-square rounded-xl overflow-hidden border border-border">
+            <img src={src} alt="Learners at Mombasa Kiongozi Academy" className="h-full w-full object-cover hover:scale-105 transition duration-500" />
           </div>
         ))}
       </div>
@@ -290,15 +304,15 @@ function Admissions() {
           <div className="grid md:grid-cols-2 gap-10">
             <div>
               <div className="text-xs uppercase tracking-widest text-primary font-semibold">Admissions</div>
-              <h2 className="mt-3 text-3xl font-bold">Join the Blessed family</h2>
+              <h2 className="mt-3 text-3xl font-bold">Join the Kiongozi family</h2>
               <p className="mt-4 text-muted-foreground">
-                We welcome pupils from Baby Class through Primary 7. Applications
+                We welcome learners from Playgroup through Junior School. Applications
                 are open all year, with priority intakes at the start of each term.
               </p>
               <div className="mt-6 space-y-3 text-sm">
-                <Row icon={<Calendar className="h-4 w-4" />}>Term 1 opens 15th January</Row>
-                <Row icon={<Calendar className="h-4 w-4" />}>Term 2 opens 20th May</Row>
-                <Row icon={<Calendar className="h-4 w-4" />}>Term 3 opens 9th September</Row>
+                <Row icon={<Calendar className="h-4 w-4" />}>Term 1 opens January</Row>
+                <Row icon={<Calendar className="h-4 w-4" />}>Term 2 opens May</Row>
+                <Row icon={<Calendar className="h-4 w-4" />}>Term 3 opens September</Row>
               </div>
             </div>
             <div>
@@ -329,10 +343,14 @@ function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-20">
       <div className="grid md:grid-cols-3 gap-6">
-        <ContactCard icon={<MapPin />} title="Location" lines={["Magongo Kwahola", "Uganda"]} />
-        <ContactCard icon={<Phone />} title="Phone" lines={["+256 700 000 000", "+256 780 000 000"]} />
-        <ContactCard icon={<Mail />} title="Email" lines={["info@blessedjunior.sc", "admissions@blessedjunior.sc"]} />
+        <ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} />
+        <ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} />
+        <ContactCard icon={<Mail />} title="Email" lines={["info@mombasakiongozi.ac.ke", "admissions@mombasakiongozi.ac.ke"]} />
       </div>
+      <p className="mt-6 text-xs text-muted-foreground text-center max-w-xl mx-auto">
+        Contact details above are placeholders — replace with the school's verified
+        phone number, email and street address.
+      </p>
     </section>
   );
 }
@@ -353,7 +371,7 @@ function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-4 items-center justify-between text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-brand-foreground"><School className="h-4 w-4" /></span>
-          © {new Date().getFullYear()} Blessed Junior School, Magongo Kwahola.
+          © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
         </div>
         <div className="flex gap-6">
           <a href="#about" className="hover:text-primary">About</a>
