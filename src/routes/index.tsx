@@ -15,6 +15,9 @@ import photo3 from "@/3.jpeg";
 import photo4 from "@/4.jpeg";
 import photo5 from "@/5.jpeg";
 
+const creativeImg = "https://images.pexels.com/photos/5063473/pexels-photo-5063473.jpeg?auto=compress&cs=tinysrgb&w=700";
+const inquisitiveImg = "https://images.pexels.com/photos/8617957/pexels-photo-8617957.jpeg?auto=compress&cs=tinysrgb&w=700";
+
 export const Route = createFileRoute("/")({
   component: Landing,
 });
@@ -157,22 +160,11 @@ function About() {
         <div className="grid grid-cols-2 gap-4">
           <Reveal from="right" delay={0}><PhotoFeature img={photo1} icon={<Shield />} title="Safe" desc="Fenced, monitored campus" /></Reveal>
           <Reveal from="right" delay={100}><PhotoFeature img={photo2} icon={<HeartHandshake />} title="Nurturing" desc="Small class sizes" /></Reveal>
-          <Reveal from="right" delay={200}><Feature tone="white" icon={<Sparkles />} title="Creative" desc="Arts, music, drama" /></Reveal>
-          <Reveal from="right" delay={300}><Feature tone="green" icon={<Microscope />} title="Inquisitive" desc="Hands-on science" /></Reveal>
+          <Reveal from="right" delay={200}><PhotoFeature img={creativeImg} icon={<Sparkles />} title="Creative" desc="Arts, music, drama" /></Reveal>
+          <Reveal from="right" delay={300}><PhotoFeature img={inquisitiveImg} icon={<Microscope />} title="Inquisitive" desc="Hands-on science" /></Reveal>
         </div>
       </div>
     </section>
-  );
-}
-
-function Feature({ icon, title, desc, tone = "white" }: { icon: React.ReactNode; title: string; desc: string; tone?: "white" | "green" }) {
-  const green = tone === "green";
-  return (
-    <div className={`rounded-2xl p-6 shadow-card hover:-translate-y-1 transition ${green ? "bg-brand-gradient text-brand-foreground" : "border border-border bg-card"}`}>
-      <div className={`grid h-10 w-10 place-items-center rounded-lg ${green ? "bg-white/15" : "bg-secondary text-primary"}`}>{icon}</div>
-      <div className="mt-4 font-semibold text-lg">{title}</div>
-      <div className={`text-sm ${green ? "opacity-90" : "text-muted-foreground"}`}>{desc}</div>
-    </div>
   );
 }
 
@@ -192,12 +184,30 @@ function PhotoFeature({ img, icon, title, desc }: { img: string; icon: React.Rea
 
 function Programs() {
   const progs = [
-    { icon: <Sun />, title: "Early Years", desc: "Playgroup, PP1 & PP2 — play-based discovery." },
-    { icon: <BookOpen />, title: "Lower Primary", desc: "Grade 1–3, building reading, writing & numeracy." },
-    { icon: <GraduationCap />, title: "Upper Primary", desc: "Grade 4–6, preparing learners for KPSEA excellence." },
-    { icon: <Music />, title: "Arts & Music", desc: "Choir, drama, dance and craft clubs." },
-    { icon: <Microscope />, title: "STEM", desc: "Science lab, coding & robotics starter club." },
-    { icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & swimming." },
+    {
+      icon: <Sun />, title: "Early Years", desc: "Playgroup, PP1 & PP2 — play-based discovery.",
+      img: "https://images.pexels.com/photos/8363567/pexels-photo-8363567.jpeg?auto=compress&cs=tinysrgb&w=700",
+    },
+    {
+      icon: <BookOpen />, title: "Lower Primary", desc: "Grade 1–3, building reading, writing & numeracy.",
+      img: "https://images.pexels.com/photos/8500275/pexels-photo-8500275.jpeg?auto=compress&cs=tinysrgb&w=700",
+    },
+    {
+      icon: <GraduationCap />, title: "Upper Primary", desc: "Grade 4–6, preparing learners for KPSEA excellence.",
+      img: "https://images.pexels.com/photos/5905505/pexels-photo-5905505.jpeg?auto=compress&cs=tinysrgb&w=700",
+    },
+    {
+      icon: <Music />, title: "Arts & Music", desc: "Choir, drama, dance and craft clubs.",
+      img: "https://images.pexels.com/photos/7714216/pexels-photo-7714216.jpeg?auto=compress&cs=tinysrgb&w=700",
+    },
+    {
+      icon: <Microscope />, title: "STEM", desc: "Science lab, coding & robotics starter club.",
+      img: "https://images.pexels.com/photos/5905935/pexels-photo-5905935.jpeg?auto=compress&cs=tinysrgb&w=700",
+    },
+    {
+      icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & swimming.",
+      img: "https://images.pexels.com/photos/36826363/pexels-photo-36826363.jpeg?auto=compress&cs=tinysrgb&w=700",
+    },
   ];
   return (
     <section id="programs" className="bg-secondary/40 py-20 overflow-x-clip">
@@ -215,12 +225,19 @@ function Programs() {
             const green = idx % 2 === 1;
             return (
               <Reveal key={p.title} from={idx % 2 === 0 ? "left" : "right"} delay={(idx % 3) * 110}>
-                <div className={`group rounded-2xl p-6 shadow-card hover:shadow-glow hover:-translate-y-1 transition h-full ${green ? "bg-brand-gradient text-brand-foreground" : "bg-card border border-border"}`}>
-                  <div className={`grid h-12 w-12 place-items-center rounded-xl ${green ? "bg-white/15" : "bg-brand-gradient text-brand-foreground"}`}>{p.icon}</div>
-                  <h3 className="mt-5 text-xl font-semibold">{p.title}</h3>
-                  <p className={`mt-2 text-sm ${green ? "opacity-90" : "text-muted-foreground"}`}>{p.desc}</p>
-                  <div className={`mt-4 text-sm font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition ${green ? "" : "text-primary"}`}>
-                    Learn more <ChevronRight className="h-4 w-4" />
+                <div className="group rounded-2xl overflow-hidden border border-border bg-card shadow-card hover:shadow-glow hover:-translate-y-1 transition h-full">
+                  <div className="relative h-40">
+                    <img src={p.img} alt={p.title} className="h-full w-full object-cover" />
+                    <div className={`absolute top-3 left-3 grid h-11 w-11 place-items-center rounded-xl shadow-card ${green ? "bg-brand-gradient text-brand-foreground" : "bg-white/95 text-primary backdrop-blur"}`}>
+                      {p.icon}
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-semibold">{p.title}</h3>
+                    <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
+                    <div className="mt-4 text-sm text-primary font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                      Learn more <ChevronRight className="h-4 w-4" />
+                    </div>
                   </div>
                 </div>
               </Reveal>
