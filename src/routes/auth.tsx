@@ -7,7 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { School, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import logo from "@/LOGO.jpeg";
 
 export const Route = createFileRoute("/auth")({
   ssr: false,
@@ -66,7 +67,7 @@ function AuthPage() {
         </Link>
         <div className="rounded-3xl border border-border bg-card shadow-card p-8">
           <div className="flex items-center gap-2 mb-6">
-            <span className="grid h-10 w-10 place-items-center rounded-lg bg-brand-gradient text-brand-foreground"><School className="h-5 w-5" /></span>
+            <span className="grid h-10 w-10 place-items-center rounded-lg overflow-hidden"><img src={logo} alt="" className="h-full w-full object-cover" /></span>
             <div>
               <div className="font-display font-bold text-lg">Mombasa Kiongozi Academy</div>
               <div className="text-xs text-muted-foreground">School Management Portal</div>

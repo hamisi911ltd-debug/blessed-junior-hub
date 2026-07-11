@@ -12,6 +12,7 @@ import {
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useState, type ReactNode } from "react";
+import logo from "@/LOGO.jpeg";
 
 type NavItem = { to: string; label: string; icon: ReactNode; show?: (r: string[]) => boolean };
 
@@ -65,7 +66,7 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
     <div className="min-h-screen md:grid md:grid-cols-[260px_1fr] bg-secondary/30">
       <aside className="hidden md:flex flex-col bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
         <Link to="/" className="flex items-center gap-2 px-5 h-16 border-b border-sidebar-border">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><School className="h-5 w-5" /></span>
+          <span className="grid h-9 w-9 place-items-center rounded-lg overflow-hidden"><img src={logo} alt="" className="h-full w-full object-cover" /></span>
           <span className="font-display font-bold">Kiongozi Academy</span>
         </Link>
         <NavLinks items={items} active={isActive} />
@@ -82,7 +83,7 @@ export function DashShell({ children, title, subtitle, actions }: { children: Re
 
       <div className="flex md:hidden items-center justify-between h-14 px-4 border-b bg-sidebar text-sidebar-foreground sticky top-0 z-40">
         <Link to="/" className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"><School className="h-4 w-4" /></span>
+          <span className="grid h-8 w-8 place-items-center rounded-lg overflow-hidden"><img src={logo} alt="" className="h-full w-full object-cover" /></span>
           <span className="font-display font-bold text-sm">Kiongozi Academy</span>
         </Link>
         <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

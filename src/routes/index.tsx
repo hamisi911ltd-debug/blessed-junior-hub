@@ -1,12 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
+import { Reveal } from "@/components/Reveal";
 import {
   BookOpen, GraduationCap, Users, Trophy, HeartHandshake, Sparkles,
-  MapPin, Phone, Mail, Calendar, ArrowRight, CheckCircle2, School,
+  MapPin, Phone, Mail, Calendar, ArrowRight, CheckCircle2,
   Shield, Palette, Music, Microscope, Sun, ChevronRight,
   Facebook, Instagram, Twitter, Youtube,
 } from "lucide-react";
+import logo from "@/LOGO.jpeg";
+import photo1 from "@/1.jpeg";
+import photo2 from "@/2.jpeg";
+import photo3 from "@/3.jpeg";
+import photo4 from "@/4.jpeg";
+import photo5 from "@/5.jpeg";
 
 export const Route = createFileRoute("/")({
   component: Landing,
@@ -34,8 +41,8 @@ function Header() {
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-display font-bold text-lg">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-gradient text-brand-foreground shadow-glow">
-            <School className="h-5 w-5" />
+          <span className="grid h-9 w-9 place-items-center rounded-lg overflow-hidden shadow-glow">
+            <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-cover" />
           </span>
           <span>Mombasa Kiongozi <span className="text-primary">Academy</span></span>
         </Link>
@@ -61,7 +68,7 @@ function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero">
       <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 md:pt-10 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
-        <div>
+        <Reveal from="left">
           <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs font-medium">
             <Sparkles className="h-3.5 w-3.5 text-[color:var(--accent-2)]" />
             Enrolling for the new term now
@@ -87,11 +94,11 @@ function Hero() {
             <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Safe campus</span>
             <span className="flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> CBC curriculum</span>
           </div>
-        </div>
-        <div className="relative">
+        </Reveal>
+        <Reveal from="right" delay={120} className="relative">
           <div className="aspect-[4/5] rounded-3xl bg-brand-gradient shadow-glow p-2 rotate-2 hover:rotate-0 transition-transform duration-500">
             <img
-              src="https://images.pexels.com/photos/14909652/pexels-photo-14909652.jpeg?auto=compress&cs=tinysrgb&w=900"
+              src={photo3}
               alt="Learners at Mombasa Kiongozi Academy"
               className="h-full w-full rounded-[22px] object-cover"
             />
@@ -100,13 +107,9 @@ function Hero() {
             🎉 CBC-aligned
           </div>
           <div className="absolute -top-6 -right-4 hidden sm:block w-32 aspect-square rounded-2xl overflow-hidden border-4 border-background shadow-card rotate-6">
-            <img
-              src="https://images.pexels.com/photos/9223236/pexels-photo-9223236.jpeg?auto=compress&cs=tinysrgb&w=300"
-              alt="Pupil in school uniform"
-              className="h-full w-full object-cover"
-            />
+            <img src={photo1} alt="Pupil in school uniform" className="h-full w-full object-cover" />
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -120,13 +123,13 @@ function Stats() {
     { v: "Mombasa", l: "Proudly Kenyan, coastal roots" },
   ];
   return (
-    <section className="border-y border-border bg-secondary/40">
+    <section className="border-y border-border bg-secondary/40 overflow-x-clip">
       <div className="mx-auto max-w-7xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
-        {items.map((i) => (
-          <div key={i.l} className="text-center">
+        {items.map((i, idx) => (
+          <Reveal key={i.l} from={idx % 2 === 0 ? "left" : "right"} delay={idx * 90} className="text-center">
             <div className="text-3xl md:text-4xl font-extrabold text-primary font-display">{i.v}</div>
             <div className="text-sm text-muted-foreground mt-1">{i.l}</div>
-          </div>
+          </Reveal>
         ))}
       </div>
     </section>
@@ -135,9 +138,9 @@ function Stats() {
 
 function About() {
   return (
-    <section id="about" className="mx-auto max-w-7xl px-6 py-20">
+    <section id="about" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
       <div className="grid md:grid-cols-2 gap-12 items-center">
-        <div>
+        <Reveal from="left">
           <div className="text-xs uppercase tracking-widest text-primary font-semibold">About us</div>
           <h2 className="mt-3 text-4xl font-bold">A caring academy shaping brilliant futures.</h2>
           <p className="mt-5 text-muted-foreground text-lg">
@@ -158,12 +161,12 @@ function About() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
         <div className="grid grid-cols-2 gap-4">
-          <Feature icon={<Shield />} title="Safe" desc="Fenced, monitored campus" />
-          <Feature icon={<HeartHandshake />} title="Nurturing" desc="Small class sizes" />
-          <Feature icon={<Sparkles />} title="Creative" desc="Arts, music, drama" />
-          <Feature icon={<Microscope />} title="Inquisitive" desc="Hands-on science" />
+          <Reveal from="right" delay={0}><Feature icon={<Shield />} title="Safe" desc="Fenced, monitored campus" /></Reveal>
+          <Reveal from="right" delay={100}><Feature icon={<HeartHandshake />} title="Nurturing" desc="Small class sizes" /></Reveal>
+          <Reveal from="right" delay={200}><Feature icon={<Sparkles />} title="Creative" desc="Arts, music, drama" /></Reveal>
+          <Reveal from="right" delay={300}><Feature icon={<Microscope />} title="Inquisitive" desc="Hands-on science" /></Reveal>
         </div>
       </div>
     </section>
@@ -190,26 +193,28 @@ function Programs() {
     { icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & swimming." },
   ];
   return (
-    <section id="programs" className="bg-secondary/40 py-20">
+    <section id="programs" className="bg-secondary/40 py-20 overflow-x-clip">
       <div className="mx-auto max-w-7xl px-6">
-        <div className="text-center max-w-2xl mx-auto">
+        <Reveal from="top" className="text-center max-w-2xl mx-auto">
           <div className="text-xs uppercase tracking-widest text-primary font-semibold">Programs</div>
           <h2 className="mt-3 text-4xl font-bold">A well-rounded education</h2>
           <p className="mt-4 text-muted-foreground">
             We follow Kenya's national CBC framework, enriched with creative arts,
             sports and STEM.
           </p>
-        </div>
+        </Reveal>
         <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {progs.map((p) => (
-            <div key={p.title} className="group rounded-2xl bg-card border border-border p-6 shadow-card hover:shadow-glow transition">
-              <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-gradient text-brand-foreground">{p.icon}</div>
-              <h3 className="mt-5 text-xl font-semibold">{p.title}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-              <div className="mt-4 text-sm text-primary font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-                Learn more <ChevronRight className="h-4 w-4" />
+          {progs.map((p, idx) => (
+            <Reveal key={p.title} from={idx % 2 === 0 ? "left" : "right"} delay={(idx % 3) * 110}>
+              <div className="group rounded-2xl bg-card border border-border p-6 shadow-card hover:shadow-glow transition h-full">
+                <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-gradient text-brand-foreground">{p.icon}</div>
+                <h3 className="mt-5 text-xl font-semibold">{p.title}</h3>
+                <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
+                <div className="mt-4 text-sm text-primary font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                  Learn more <ChevronRight className="h-4 w-4" />
+                </div>
               </div>
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
@@ -219,78 +224,77 @@ function Programs() {
 
 function WhyUs() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20">
-      <div className="rounded-3xl bg-brand-gradient text-brand-foreground p-10 md:p-14 shadow-glow relative overflow-hidden">
-        <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-[color:var(--accent-2)]/40 blur-3xl" />
-        <div className="relative grid md:grid-cols-3 gap-8">
-          <div className="md:col-span-1">
-            <h2 className="text-3xl md:text-4xl font-bold">Why parents choose us</h2>
-            <p className="mt-3 opacity-90">Real results, real care, and a community that feels like family.</p>
-          </div>
-          <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
-            {[
-              ["Consistent academic performance", "Top-tier CBC results year after year."],
-              ["Small classes", "Every learner is seen and known."],
-              ["Character formation", "Leadership and values woven into every lesson."],
-              ["Modern facilities", "Library, ICT lab, health room."],
-            ].map(([t, d]) => (
-              <div key={t} className="rounded-2xl bg-background/10 backdrop-blur border border-white/20 p-5">
-                <div className="font-semibold text-lg">{t}</div>
-                <div className="mt-1 text-sm opacity-90">{d}</div>
-              </div>
-            ))}
+    <section className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
+      <Reveal from="bottom">
+        <div className="rounded-3xl bg-brand-gradient text-brand-foreground p-10 md:p-14 shadow-glow relative overflow-hidden">
+          <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-[color:var(--accent-2)]/40 blur-3xl" />
+          <div className="relative grid md:grid-cols-3 gap-8">
+            <div className="md:col-span-1">
+              <h2 className="text-3xl md:text-4xl font-bold">Why parents choose us</h2>
+              <p className="mt-3 opacity-90">Real results, real care, and a community that feels like family.</p>
+            </div>
+            <div className="md:col-span-2 grid sm:grid-cols-2 gap-4">
+              {[
+                ["Consistent academic performance", "Top-tier CBC results year after year."],
+                ["Small classes", "Every learner is seen and known."],
+                ["Character formation", "Leadership and values woven into every lesson."],
+                ["Modern facilities", "Library, ICT lab, health room."],
+              ].map(([t, d]) => (
+                <div key={t} className="rounded-2xl bg-background/10 backdrop-blur border border-white/20 p-5">
+                  <div className="font-semibold text-lg">{t}</div>
+                  <div className="mt-1 text-sm opacity-90">{d}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
 
 function Life() {
   const cards = [
+    { t: "Reading Culture", d: "Daily library time and reading challenges.", img: photo4, from: "left" as const },
     {
-      t: "Reading Culture",
-      d: "Daily library time and reading challenges.",
-      img: "https://images.unsplash.com/photo-1576108700272-8d9f86c51273?q=80&w=800&auto=format&fit=crop",
-    },
-    {
-      t: "Sports Day",
-      d: "Termly inter-house competitions on our playgrounds.",
+      t: "Sports Day", d: "Termly inter-house competitions on our playgrounds.",
       img: "https://images.unsplash.com/photo-1591502843994-4d9433685765?q=80&w=800&auto=format&fit=crop",
+      from: "bottom" as const,
     },
-    {
-      t: "Music & Drama",
-      d: "Performances every term for the whole community.",
-      img: "https://images.unsplash.com/photo-1548102249-acdce64fffbd?q=80&w=800&auto=format&fit=crop",
-    },
+    { t: "Digital Learning", d: "Hands-on time in our ICT computer lab every week.", img: photo5, from: "right" as const },
+  ];
+  const gallery = [
+    photo2,
+    "https://images.unsplash.com/photo-1547082661-71362fc3969c?q=80&w=500&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1547226706-af7e2c20bcea?q=80&w=500&auto=format&fit=crop",
+    "https://images.pexels.com/photos/35839372/pexels-photo-35839372.jpeg?auto=compress&cs=tinysrgb&w=500",
   ];
   return (
-    <section id="life" className="mx-auto max-w-7xl px-6 py-20">
-      <div className="text-center max-w-2xl mx-auto">
+    <section id="life" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
+      <Reveal from="top" className="text-center max-w-2xl mx-auto">
         <div className="text-xs uppercase tracking-widest text-primary font-semibold">School Life</div>
         <h2 className="mt-3 text-4xl font-bold">Every day is an adventure</h2>
-      </div>
+      </Reveal>
       <div className="mt-12 grid md:grid-cols-3 gap-6">
         {cards.map((c) => (
-          <div key={c.t} className="rounded-2xl overflow-hidden border border-border shadow-card">
-            <img src={c.img} alt={c.t} className="h-44 w-full object-cover" />
-            <div className="p-5">
-              <div className="font-semibold">{c.t}</div>
-              <div className="text-sm text-muted-foreground mt-1">{c.d}</div>
+          <Reveal key={c.t} from={c.from}>
+            <div className="rounded-2xl overflow-hidden border border-border shadow-card">
+              <img src={c.img} alt={c.t} className="h-44 w-full object-cover" />
+              <div className="p-5">
+                <div className="font-semibold">{c.t}</div>
+                <div className="text-sm text-muted-foreground mt-1">{c.d}</div>
+              </div>
             </div>
-          </div>
+          </Reveal>
         ))}
       </div>
       <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          "https://images.unsplash.com/photo-1547082661-71362fc3969c?q=80&w=500&auto=format&fit=crop",
-          "https://images.unsplash.com/photo-1547226706-af7e2c20bcea?q=80&w=500&auto=format&fit=crop",
-          "https://images.pexels.com/photos/35839372/pexels-photo-35839372.jpeg?auto=compress&cs=tinysrgb&w=500",
-          "https://images.pexels.com/photos/18449718/pexels-photo-18449718.jpeg?auto=compress&cs=tinysrgb&w=500",
-        ].map((src) => (
-          <div key={src} className="aspect-square rounded-xl overflow-hidden border border-border">
-            <img src={src} alt="Learners at Mombasa Kiongozi Academy" className="h-full w-full object-cover hover:scale-105 transition duration-500" />
-          </div>
+        {gallery.map((src, idx) => (
+          <Reveal key={src} from={idx % 2 === 0 ? "left" : "right"} delay={idx * 80}>
+            <div className="aspect-square rounded-xl overflow-hidden border border-border">
+              <img src={src} alt="Learners at Mombasa Kiongozi Academy" className="h-full w-full object-cover hover:scale-105 transition duration-500" />
+            </div>
+          </Reveal>
         ))}
       </div>
     </section>
@@ -299,11 +303,11 @@ function Life() {
 
 function Admissions() {
   return (
-    <section id="admissions" className="bg-secondary/40 py-20">
+    <section id="admissions" className="bg-secondary/40 py-20 overflow-x-clip">
       <div className="mx-auto max-w-5xl px-6">
         <div className="rounded-3xl bg-card border border-border p-10 shadow-card">
           <div className="grid md:grid-cols-2 gap-10">
-            <div>
+            <Reveal from="left">
               <div className="text-xs uppercase tracking-widest text-primary font-semibold">Admissions</div>
               <h2 className="mt-3 text-3xl font-bold">Join the Kiongozi family</h2>
               <p className="mt-4 text-muted-foreground">
@@ -315,8 +319,8 @@ function Admissions() {
                 <Row icon={<Calendar className="h-4 w-4" />}>Term 2 opens May</Row>
                 <Row icon={<Calendar className="h-4 w-4" />}>Term 3 opens September</Row>
               </div>
-            </div>
-            <div>
+            </Reveal>
+            <Reveal from="right" delay={100}>
               <ol className="space-y-4">
                 {["Visit the school or call us", "Collect / complete an application form", "Sit an entry interview", "Receive admission letter", "Pay fees & report on opening day"].map((s, i) => (
                   <li key={s} className="flex items-start gap-3">
@@ -328,7 +332,7 @@ function Admissions() {
               <Button asChild size="lg" className="mt-6 w-full bg-brand-gradient text-brand-foreground shadow-glow">
                 <a href="#contact">Start your application</a>
               </Button>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>
@@ -342,11 +346,11 @@ function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactN
 
 function Contact() {
   return (
-    <section id="contact" className="mx-auto max-w-7xl px-6 py-20">
+    <section id="contact" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
       <div className="grid md:grid-cols-3 gap-6">
-        <ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} />
-        <ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} />
-        <ContactCard icon={<Mail />} title="Email" lines={["info@mombasakiongozi.ac.ke", "admissions@mombasakiongozi.ac.ke"]} />
+        <Reveal from="left"><ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} /></Reveal>
+        <Reveal from="bottom" delay={100}><ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} /></Reveal>
+        <Reveal from="right" delay={200}><ContactCard icon={<Mail />} title="Email" lines={["info@mombasakiongozi.ac.ke", "admissions@mombasakiongozi.ac.ke"]} /></Reveal>
       </div>
       <p className="mt-6 text-xs text-muted-foreground text-center max-w-xl mx-auto">
         Contact details above are placeholders — replace with the school's verified
@@ -377,7 +381,9 @@ function Footer() {
     <footer className="border-t border-border bg-secondary/40">
       <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-brand-foreground"><School className="h-4 w-4" /></span>
+          <span className="grid h-8 w-8 place-items-center rounded-lg overflow-hidden">
+            <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-cover" />
+          </span>
           © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
         </div>
         <div className="flex items-center gap-2">
