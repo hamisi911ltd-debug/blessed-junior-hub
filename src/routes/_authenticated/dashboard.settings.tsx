@@ -205,20 +205,63 @@ function ProfileTab() {
   });
 
   return (
-    <div className="rounded-2xl border bg-card p-6 shadow-card max-w-md space-y-4">
+    <div className="space-y-6 max-w-md">
+      <div className="rounded-2xl border bg-card p-6 shadow-card space-y-4">
+        <div>
+          <Label>Login ID</Label>
+          <Input value={user?.email ?? user?.phone ?? user?.username ?? ""} disabled />
+        </div>
+        <div>
+          <Label>Full name</Label>
+          <Input value={fullName} onChange={(e) => setFullName(e.target.value)} />
+        </div>
+        <div>
+          <Label>Phone</Label>
+          <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+        </div>
+        <Button onClick={() => save.mutate()} className="bg-brand-gradient text-brand-foreground">Save changes</Button>
+      </div>
+      <ChangePasswordCard />
+    </div>
+  );
+}
+
+function ChangePasswordCard() {
+  const [current, setCurrent] = useState("");
+  const [next, setNext] = useState("");
+  const [confirm, setConfirm] = useState("");
+
+  const change = useMutation({
+    mutationFn: async () => {
+      if (next.length < 6) throw new Error("New password must be at least 6 characters");
+      if (next !== confirm) throw new Error("New passwords don't match");
+      return api.auth.changePassword(current, next);
+    },
+    onSuccess: () => {
+      toast.success("Password updated");
+      setCurrent(""); setNext(""); setConfirm("");
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
+
+  return (
+    <div className="rounded-2xl border bg-card p-6 shadow-card space-y-4">
+      <div className="font-display font-semibold">Change password</div>
       <div>
-        <Label>Email</Label>
-        <Input value={user?.email ?? user?.phone ?? ""} disabled />
+        <Label>Current password</Label>
+        <Input type="password" value={current} onChange={(e) => setCurrent(e.target.value)} />
       </div>
       <div>
-        <Label>Full name</Label>
-        <Input value={fullName} onChange={(e) => setFullName(e.target.value)} />
+        <Label>New password</Label>
+        <Input type="password" value={next} onChange={(e) => setNext(e.target.value)} />
       </div>
       <div>
-        <Label>Phone</Label>
-        <Input value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <Label>Confirm new password</Label>
+        <Input type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
       </div>
-      <Button onClick={() => save.mutate()} className="bg-brand-gradient text-brand-foreground">Save changes</Button>
+      <Button onClick={() => change.mutate()} disabled={!current || !next || change.isPending} className="bg-brand-gradient text-brand-foreground">
+        Update password
+      </Button>
     </div>
   );
 }

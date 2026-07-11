@@ -11,9 +11,12 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useMemo, useState } from "react";
 import { toast } from "sonner";
-import { Trash2 } from "lucide-react";
+import { Trash2, KeyRound } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard/teachers")({
   component: Page,
@@ -88,6 +91,7 @@ function RolesPanel() {
   });
 
   const [role, setRole] = useState<Record<string, string>>({});
+  const [resetTarget, setResetTarget] = useState<Row | null>(null);
 
   return (
     <div className="rounded-2xl border bg-card shadow-card overflow-x-auto">
@@ -98,10 +102,11 @@ function RolesPanel() {
             <TableHead>Email</TableHead>
             <TableHead>Roles</TableHead>
             <TableHead>Assign role</TableHead>
+            <TableHead className="text-right">Password</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {isLoading ? <TableRow><TableCell colSpan={4}>Loading…</TableCell></TableRow> :
+          {isLoading ? <TableRow><TableCell colSpan={5}>Loading…</TableCell></TableRow> :
             data.map((u) => (
               <TableRow key={u.id}>
                 <TableCell className="font-medium">{u.full_name || "—"}</TableCell>
@@ -130,10 +135,51 @@ function RolesPanel() {
                     <Button size="sm" disabled={!role[u.id]} onClick={() => role[u.id] && addRole.mutate({ user_id: u.id, role: role[u.id] })}>Add</Button>
                   </div>
                 </TableCell>
+                <TableCell className="text-right">
+                  <Button variant="ghost" size="icon" title="Reset password" onClick={() => setResetTarget(u)}>
+                    <KeyRound className="h-4 w-4" />
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
         </TableBody>
       </Table>
+      <ResetPasswordDialog target={resetTarget} onClose={() => setResetTarget(null)} />
     </div>
+  );
+}
+
+function ResetPasswordDialog({ target, onClose }: { target: Row | null; onClose: () => void }) {
+  const [password, setPassword] = useState("");
+
+  const reset = useMutation({
+    mutationFn: async () => {
+      if (password.length < 6) throw new Error("Password must be at least 6 characters");
+      return api.admin.resetPassword(target!.id, password);
+    },
+    onSuccess: () => {
+      toast.success(`Password reset for ${target?.full_name}`);
+      setPassword("");
+      onClose();
+    },
+    onError: (e: any) => toast.error(e.message),
+  });
+
+  return (
+    <Dialog open={!!target} onOpenChange={(o) => !o && onClose()}>
+      <DialogContent className="max-w-sm">
+        <DialogHeader><DialogTitle>Reset password for {target?.full_name}</DialogTitle></DialogHeader>
+        <div>
+          <Label>New password</Label>
+          <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="At least 6 characters" />
+        </div>
+        <DialogFooter>
+          <Button type="button" variant="ghost" onClick={onClose}>Cancel</Button>
+          <Button onClick={() => reset.mutate()} disabled={!password || reset.isPending} className="bg-brand-gradient text-brand-foreground">
+            Reset password
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

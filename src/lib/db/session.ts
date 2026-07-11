@@ -56,6 +56,7 @@ export async function destroySession(): Promise<void> {
 export interface SessionUser {
   id: string;
   email: string | null;
+  username: string | null;
   full_name: string;
   phone: string | null;
 }
@@ -67,7 +68,7 @@ export async function getSessionUser(): Promise<SessionUser | null> {
 
   const row = await getDb()
     .prepare(
-      `SELECT u.id as id, u.email as email, p.full_name as full_name, p.phone as phone
+      `SELECT u.id as id, u.email as email, u.username as username, p.full_name as full_name, p.phone as phone
        FROM sessions s
        JOIN users u ON u.id = s.user_id
        LEFT JOIN profiles p ON p.id = u.id

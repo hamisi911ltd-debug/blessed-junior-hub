@@ -15,11 +15,14 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
+import { Route as ApiPublicSchoolContactRouteImport } from './routes/api.public.school-contact'
 import { Route as ApiDbTableRouteImport } from './routes/api.db.$table'
 import { Route as ApiAuthSignupRouteImport } from './routes/api.auth.signup'
 import { Route as ApiAuthSignoutRouteImport } from './routes/api.auth.signout'
 import { Route as ApiAuthSigninRouteImport } from './routes/api.auth.signin'
 import { Route as ApiAuthMeRouteImport } from './routes/api.auth.me'
+import { Route as ApiAuthChangePasswordRouteImport } from './routes/api.auth.change-password'
+import { Route as ApiAdminResetPasswordRouteImport } from './routes/api.admin.reset-password'
 import { Route as AuthenticatedDashboardTeachersRouteImport } from './routes/_authenticated/dashboard.teachers'
 import { Route as AuthenticatedDashboardStudentsRouteImport } from './routes/_authenticated/dashboard.students'
 import { Route as AuthenticatedDashboardSmsRouteImport } from './routes/_authenticated/dashboard.sms'
@@ -62,6 +65,11 @@ const AuthenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const ApiPublicSchoolContactRoute = ApiPublicSchoolContactRouteImport.update({
+  id: '/api/public/school-contact',
+  path: '/api/public/school-contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiDbTableRoute = ApiDbTableRouteImport.update({
   id: '/api/db/$table',
   path: '/api/db/$table',
@@ -85,6 +93,16 @@ const ApiAuthSigninRoute = ApiAuthSigninRouteImport.update({
 const ApiAuthMeRoute = ApiAuthMeRouteImport.update({
   id: '/api/auth/me',
   path: '/api/auth/me',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAuthChangePasswordRoute = ApiAuthChangePasswordRouteImport.update({
+  id: '/api/auth/change-password',
+  path: '/api/auth/change-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAdminResetPasswordRoute = ApiAdminResetPasswordRouteImport.update({
+  id: '/api/admin/reset-password',
+  path: '/api/admin/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardTeachersRoute =
@@ -168,11 +186,14 @@ export interface FileRoutesByFullPath {
   '/dashboard/sms': typeof AuthenticatedDashboardSmsRoute
   '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
+  '/api/admin/reset-password': typeof ApiAdminResetPasswordRoute
+  '/api/auth/change-password': typeof ApiAuthChangePasswordRoute
   '/api/auth/me': typeof ApiAuthMeRoute
   '/api/auth/signin': typeof ApiAuthSigninRoute
   '/api/auth/signout': typeof ApiAuthSignoutRoute
   '/api/auth/signup': typeof ApiAuthSignupRoute
   '/api/db/$table': typeof ApiDbTableRouteWithChildren
+  '/api/public/school-contact': typeof ApiPublicSchoolContactRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/db/$table/$id': typeof ApiDbTableIdRoute
 }
@@ -190,11 +211,14 @@ export interface FileRoutesByTo {
   '/dashboard/sms': typeof AuthenticatedDashboardSmsRoute
   '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
+  '/api/admin/reset-password': typeof ApiAdminResetPasswordRoute
+  '/api/auth/change-password': typeof ApiAuthChangePasswordRoute
   '/api/auth/me': typeof ApiAuthMeRoute
   '/api/auth/signin': typeof ApiAuthSigninRoute
   '/api/auth/signout': typeof ApiAuthSignoutRoute
   '/api/auth/signup': typeof ApiAuthSignupRoute
   '/api/db/$table': typeof ApiDbTableRouteWithChildren
+  '/api/public/school-contact': typeof ApiPublicSchoolContactRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/api/db/$table/$id': typeof ApiDbTableIdRoute
 }
@@ -215,11 +239,14 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/sms': typeof AuthenticatedDashboardSmsRoute
   '/_authenticated/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
   '/_authenticated/dashboard/teachers': typeof AuthenticatedDashboardTeachersRoute
+  '/api/admin/reset-password': typeof ApiAdminResetPasswordRoute
+  '/api/auth/change-password': typeof ApiAuthChangePasswordRoute
   '/api/auth/me': typeof ApiAuthMeRoute
   '/api/auth/signin': typeof ApiAuthSigninRoute
   '/api/auth/signout': typeof ApiAuthSignoutRoute
   '/api/auth/signup': typeof ApiAuthSignupRoute
   '/api/db/$table': typeof ApiDbTableRouteWithChildren
+  '/api/public/school-contact': typeof ApiPublicSchoolContactRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/api/db/$table/$id': typeof ApiDbTableIdRoute
 }
@@ -240,11 +267,14 @@ export interface FileRouteTypes {
     | '/dashboard/sms'
     | '/dashboard/students'
     | '/dashboard/teachers'
+    | '/api/admin/reset-password'
+    | '/api/auth/change-password'
     | '/api/auth/me'
     | '/api/auth/signin'
     | '/api/auth/signout'
     | '/api/auth/signup'
     | '/api/db/$table'
+    | '/api/public/school-contact'
     | '/dashboard/'
     | '/api/db/$table/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -262,11 +292,14 @@ export interface FileRouteTypes {
     | '/dashboard/sms'
     | '/dashboard/students'
     | '/dashboard/teachers'
+    | '/api/admin/reset-password'
+    | '/api/auth/change-password'
     | '/api/auth/me'
     | '/api/auth/signin'
     | '/api/auth/signout'
     | '/api/auth/signup'
     | '/api/db/$table'
+    | '/api/public/school-contact'
     | '/dashboard'
     | '/api/db/$table/$id'
   id:
@@ -286,11 +319,14 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/sms'
     | '/_authenticated/dashboard/students'
     | '/_authenticated/dashboard/teachers'
+    | '/api/admin/reset-password'
+    | '/api/auth/change-password'
     | '/api/auth/me'
     | '/api/auth/signin'
     | '/api/auth/signout'
     | '/api/auth/signup'
     | '/api/db/$table'
+    | '/api/public/school-contact'
     | '/_authenticated/dashboard/'
     | '/api/db/$table/$id'
   fileRoutesById: FileRoutesById
@@ -300,11 +336,14 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  ApiAdminResetPasswordRoute: typeof ApiAdminResetPasswordRoute
+  ApiAuthChangePasswordRoute: typeof ApiAuthChangePasswordRoute
   ApiAuthMeRoute: typeof ApiAuthMeRoute
   ApiAuthSigninRoute: typeof ApiAuthSigninRoute
   ApiAuthSignoutRoute: typeof ApiAuthSignoutRoute
   ApiAuthSignupRoute: typeof ApiAuthSignupRoute
   ApiDbTableRoute: typeof ApiDbTableRouteWithChildren
+  ApiPublicSchoolContactRoute: typeof ApiPublicSchoolContactRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -351,6 +390,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/api/public/school-contact': {
+      id: '/api/public/school-contact'
+      path: '/api/public/school-contact'
+      fullPath: '/api/public/school-contact'
+      preLoaderRoute: typeof ApiPublicSchoolContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/db/$table': {
       id: '/api/db/$table'
       path: '/api/db/$table'
@@ -384,6 +430,20 @@ declare module '@tanstack/react-router' {
       path: '/api/auth/me'
       fullPath: '/api/auth/me'
       preLoaderRoute: typeof ApiAuthMeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/change-password': {
+      id: '/api/auth/change-password'
+      path: '/api/auth/change-password'
+      fullPath: '/api/auth/change-password'
+      preLoaderRoute: typeof ApiAuthChangePasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/admin/reset-password': {
+      id: '/api/admin/reset-password'
+      path: '/api/admin/reset-password'
+      fullPath: '/api/admin/reset-password'
+      preLoaderRoute: typeof ApiAdminResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard/teachers': {
@@ -530,11 +590,14 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
+  ApiAdminResetPasswordRoute: ApiAdminResetPasswordRoute,
+  ApiAuthChangePasswordRoute: ApiAuthChangePasswordRoute,
   ApiAuthMeRoute: ApiAuthMeRoute,
   ApiAuthSigninRoute: ApiAuthSigninRoute,
   ApiAuthSignoutRoute: ApiAuthSignoutRoute,
   ApiAuthSignupRoute: ApiAuthSignupRoute,
   ApiDbTableRoute: ApiDbTableRouteWithChildren,
+  ApiPublicSchoolContactRoute: ApiPublicSchoolContactRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

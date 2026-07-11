@@ -4,6 +4,8 @@ import { getAuthedUser, jsonResponse, isSameOriginRequest } from "@/lib/db/auth-
 import { isKnownTable, canWrite, resolveListAccess } from "@/lib/db/permissions";
 import { getRowById, updateRow, deleteRow, listRows } from "@/lib/db/query-builder";
 import { provisionGuardianAccount } from "@/lib/db/guardian-provisioning";
+import { provisionStudentAccount } from "@/lib/db/student-provisioning";
+import { provisionTeacherAccount } from "@/lib/db/teacher-provisioning";
 
 export const Route = createFileRoute("/api/db/$table/$id")({
   server: {
@@ -47,7 +49,11 @@ export const Route = createFileRoute("/api/db/$table/$id")({
 
         try {
           const updated = await updateRow(table, id, body);
-          if (table === "students") await provisionGuardianAccount(updated as any);
+          if (table === "students") {
+            await provisionGuardianAccount(updated as any);
+            await provisionStudentAccount(updated as any);
+          }
+          if (table === "teachers") await provisionTeacherAccount(updated as any);
           return jsonResponse(updated);
         } catch (e) {
           return jsonResponse({ error: e instanceof Error ? e.message : "Update failed" }, 500);

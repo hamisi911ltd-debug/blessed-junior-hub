@@ -46,3 +46,15 @@ export async function verifyPassword(password: string, stored: string): Promise<
   for (let i = 0; i < actual.length; i++) diff |= actual[i] ^ expected[i];
   return diff === 0;
 }
+
+/**
+ * Students/teachers are auto-provisioned with a phone number as their password, hashed
+ * in its canonical normalized form (see student-provisioning.ts / teacher-provisioning.ts).
+ * A real person types that phone back in whatever raw shape they're used to, so also try
+ * the normalized form before rejecting.
+ */
+export async function verifyPasswordFlexible(password: string, stored: string): Promise<boolean> {
+  if (await verifyPassword(password, stored)) return true;
+  const { normalizePhone } = await import("./phone");
+  return verifyPassword(normalizePhone(password), stored);
+}

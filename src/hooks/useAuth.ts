@@ -4,6 +4,7 @@ import { api } from "@/lib/api-client";
 export interface AuthUser {
   id: string;
   email: string | null;
+  username: string | null;
   full_name: string;
   phone: string | null;
 }

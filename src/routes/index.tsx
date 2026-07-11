@@ -14,6 +14,9 @@ import photo2 from "@/2.jpeg";
 import photo3 from "@/3.jpeg";
 import photo4 from "@/4.jpeg";
 import photo5 from "@/5.jpeg";
+import bannerImg from "@/j.jpeg";
+import ictImg from "@/h.jpeg";
+import classImg from "@/k.jpeg";
 
 const creativeImg = "https://images.pexels.com/photos/5063473/pexels-photo-5063473.jpeg?auto=compress&cs=tinysrgb&w=700";
 const inquisitiveImg = "https://images.pexels.com/photos/8617957/pexels-photo-8617957.jpeg?auto=compress&cs=tinysrgb&w=700";
@@ -70,7 +73,13 @@ function Header() {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero">
-      <div className="mx-auto max-w-7xl px-6 pt-3 pb-20 md:pt-4 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
+      <Reveal from="top">
+        <div className="relative w-full h-48 md:h-64 overflow-hidden">
+          <img src={bannerImg} alt="Mombasa Kiongozi Academy — Learn. Lead. Inspire." className="h-full w-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-background/0" />
+        </div>
+      </Reveal>
+      <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 md:pt-8 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
         <Reveal from="left">
           <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.05]">
             Raising tomorrow's <span className="text-primary">leaders</span>.
@@ -194,7 +203,7 @@ function Programs() {
     },
     {
       icon: <GraduationCap />, title: "Upper Primary", desc: "Grade 4–6, preparing learners for KPSEA excellence.",
-      img: "https://images.pexels.com/photos/5905505/pexels-photo-5905505.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: classImg,
     },
     {
       icon: <Music />, title: "Arts & Music", desc: "Choir, drama, dance and craft clubs.",
@@ -202,7 +211,7 @@ function Programs() {
     },
     {
       icon: <Microscope />, title: "STEM", desc: "Science lab, coding & robotics starter club.",
-      img: "https://images.pexels.com/photos/5905935/pexels-photo-5905935.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: ictImg,
     },
     {
       icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & swimming.",

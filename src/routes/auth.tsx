@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, MessageCircle } from "lucide-react";
 import logo from "@/LOGO.jpeg";
 
 export const Route = createFileRoute("/auth")({
@@ -41,6 +41,22 @@ function AuthPage() {
       toast.error(e instanceof ApiError ? e.message : "Sign in failed");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const onForgotPassword = async () => {
+    try {
+      const contact = await fetch("/api/public/school-contact").then((r) => r.json()) as { name: string | null; phone: string | null };
+      const digits = contact.phone?.replace(/\D/g, "") ?? "";
+      if (!digits) {
+        toast.error("No admin WhatsApp number is set up yet — contact the school office directly.");
+        return;
+      }
+      const who = identifier.trim() ? ` My sign-in ID is "${identifier.trim()}".` : "";
+      const text = `Hello, I've forgotten my password for the ${contact.name ?? "school"} portal and need it reset.${who}`;
+      window.open(`https://wa.me/${digits}?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+    } catch {
+      toast.error("Couldn't open WhatsApp — contact the school office directly.");
     }
   };
 
@@ -81,14 +97,19 @@ function AuthPage() {
             <TabsContent value="signin">
               <form onSubmit={onSignIn} className="space-y-4 mt-4">
                 <div>
-                  <Label>Email or phone number</Label>
-                  <Input required value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="you@school.com or 07XX XXX XXX" />
+                  <Label>Email, phone or username</Label>
+                  <Input required value={identifier} onChange={(e) => setIdentifier(e.target.value)} placeholder="Email, phone, full name or staff ID" />
                 </div>
                 <div><Label>Password</Label><Input type="password" required value={password} onChange={(e) => setPassword(e.target.value)} /></div>
                 <Button disabled={loading} className="w-full bg-brand-gradient text-brand-foreground">Sign in</Button>
-                <p className="text-xs text-muted-foreground text-center">
-                  Parents &amp; guardians: sign in with your phone number and your child's admission number as password.
-                </p>
+                <button type="button" onClick={onForgotPassword} className="flex items-center justify-center gap-1.5 w-full text-xs text-primary hover:underline">
+                  <MessageCircle className="h-3.5 w-3.5" /> Forgot password? Message the admin on WhatsApp
+                </button>
+                <div className="text-xs text-muted-foreground text-center space-y-0.5">
+                  <p>Parents: your phone number + your child's admission number.</p>
+                  <p>Students: your full name + your parent's phone number.</p>
+                  <p>Teachers: your ID number + your phone number.</p>
+                </div>
               </form>
             </TabsContent>
             <TabsContent value="signup">

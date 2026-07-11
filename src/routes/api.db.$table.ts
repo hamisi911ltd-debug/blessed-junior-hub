@@ -4,6 +4,8 @@ import { getAuthedUser, jsonResponse, isSameOriginRequest } from "@/lib/db/auth-
 import { isKnownTable, resolveListAccess, canWrite } from "@/lib/db/permissions";
 import { listRows, insertRow } from "@/lib/db/query-builder";
 import { provisionGuardianAccount } from "@/lib/db/guardian-provisioning";
+import { provisionStudentAccount } from "@/lib/db/student-provisioning";
+import { provisionTeacherAccount } from "@/lib/db/teacher-provisioning";
 
 export const Route = createFileRoute("/api/db/$table")({
   server: {
@@ -60,7 +62,11 @@ export const Route = createFileRoute("/api/db/$table")({
 
         try {
           const created = await insertRow(table, body);
-          if (table === "students") await provisionGuardianAccount(created as any);
+          if (table === "students") {
+            await provisionGuardianAccount(created as any);
+            await provisionStudentAccount(created as any);
+          }
+          if (table === "teachers") await provisionTeacherAccount(created as any);
           return jsonResponse(created, 201);
         } catch (e) {
           return jsonResponse({ error: e instanceof Error ? e.message : "Insert failed" }, 500);

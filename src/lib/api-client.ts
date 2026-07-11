@@ -43,7 +43,7 @@ export const api = {
   remove: (table: string, id: string) => request<{ ok: true }>(`/api/db/${table}/${id}`, { method: "DELETE" }),
 
   auth: {
-    me: async (): Promise<{ user: { id: string; email: string | null; full_name: string; phone: string | null } | null; roles: string[] }> => {
+    me: async (): Promise<{ user: { id: string; email: string | null; username: string | null; full_name: string; phone: string | null } | null; roles: string[] }> => {
       const res = await fetch("/api/auth/me", { credentials: "include" });
       if (res.status === 401) return { user: null, roles: [] };
       if (!res.ok) throw new ApiError(`Request failed (${res.status})`);
@@ -54,5 +54,12 @@ export const api = {
     signIn: (identifier: string, password: string) =>
       request<{ user: any; roles: string[] }>("/api/auth/signin", { method: "POST", body: JSON.stringify({ identifier, password }) }),
     signOut: () => request<{ ok: true }>("/api/auth/signout", { method: "POST" }),
+    changePassword: (current_password: string, new_password: string) =>
+      request<{ ok: true }>("/api/auth/change-password", { method: "POST", body: JSON.stringify({ current_password, new_password }) }),
+  },
+
+  admin: {
+    resetPassword: (user_id: string, new_password: string) =>
+      request<{ ok: true }>("/api/admin/reset-password", { method: "POST", body: JSON.stringify({ user_id, new_password }) }),
   },
 };

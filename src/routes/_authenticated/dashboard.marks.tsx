@@ -13,7 +13,7 @@ import { RosterInputGrid } from "@/components/dash/RosterInputGrid";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 
 export const Route = createFileRoute("/_authenticated/dashboard/marks")({
@@ -91,13 +91,28 @@ function Page() {
 
 function BulkResultsTab() {
   const { user } = useAuth();
-  const { data: exams = [] } = useLookup("exams", "name");
+  const { data: terms = [] } = useLookup("terms", "name");
+  const { data: allExams = [] } = useQuery({
+    queryKey: ["exams", "all-with-term"],
+    queryFn: () => api.list<{ id: string; name: string; term_id: string | null }>("exams", { orderBy: "name", ascending: true }),
+  });
   const { data: subjects = [] } = useLookup("subjects", "name");
   const { data: classes = [] } = useLookup("classes", "name");
+  const [termId, setTermId] = useState("");
   const [examId, setExamId] = useState("");
   const [subjectId, setSubjectId] = useState("");
   const [classId, setClassId] = useState("");
   const [outOf, setOutOf] = useState("100");
+
+  const examsForTerm = useMemo(
+    () => allExams.filter((e) => e.term_id === termId).map((e) => ({ value: e.id, label: e.name })),
+    [allExams, termId],
+  );
+  // Picking a different term invalidates whichever exam was selected for the old one.
+  useEffect(() => {
+    if (examId && !examsForTerm.some((e) => e.value === examId)) setExamId("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [termId]);
 
   const ready = !!(examId && subjectId && classId);
 
@@ -138,12 +153,22 @@ function BulkResultsTab() {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border bg-card p-4 shadow-card grid gap-3 sm:grid-cols-4">
+      <div className="rounded-2xl border bg-card p-4 shadow-card grid gap-3 sm:grid-cols-5">
+        <div>
+          <Label>Term</Label>
+          <Select value={termId} onValueChange={setTermId}>
+            <SelectTrigger><SelectValue placeholder="Select term" /></SelectTrigger>
+            <SelectContent>{terms.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
+          </Select>
+        </div>
         <div>
           <Label>Exam</Label>
-          <Select value={examId} onValueChange={setExamId}>
-            <SelectTrigger><SelectValue placeholder="Select exam" /></SelectTrigger>
-            <SelectContent>{exams.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}</SelectContent>
+          <Select value={examId} onValueChange={setExamId} disabled={!termId}>
+            <SelectTrigger><SelectValue placeholder={termId ? "Select exam" : "Pick a term first"} /></SelectTrigger>
+            <SelectContent>
+              {examsForTerm.length === 0 && <div className="px-2 py-1.5 text-sm text-muted-foreground">No exams for this term yet</div>}
+              {examsForTerm.map((o) => <SelectItem key={o.value} value={o.value}>{o.label}</SelectItem>)}
+            </SelectContent>
           </Select>
         </div>
         <div>
