@@ -6,11 +6,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRoles, isAdmin as checkIsAdmin } from "@/hooks/useRoles";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
+import { useProfilesWithRoles } from "@/hooks/useProfilesWithRoles";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "sonner";
 import { Trash2 } from "lucide-react";
 
@@ -22,6 +23,12 @@ function Page() {
   const { user } = useAuth();
   const { data: roles = [] } = useRoles(user?.id);
   const admin = checkIsAdmin(roles);
+  const { data: profiles = [] } = useProfilesWithRoles();
+
+  const profileOptions = useMemo(
+    () => profiles.map((p) => ({ value: p.id, label: `${p.full_name || "Unnamed"} — ${p.roles.length ? p.roles.join(", ") : "no role yet"}` })),
+    [profiles],
+  );
 
   return (
     <DashShell title="Staff & Roles" subtitle="Manage teaching staff and portal access">
@@ -39,6 +46,7 @@ function Page() {
             { name: "phone", label: "Phone" },
             { name: "qualification", label: "Qualification" },
             { name: "date_hired", label: "Date hired", type: "date" },
+            { name: "profile_id", label: "Linked portal account", type: "select", options: profileOptions, hideInTable: true },
           ]} />
         </TabsContent>
         {admin && (

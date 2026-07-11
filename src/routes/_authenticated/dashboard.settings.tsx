@@ -7,6 +7,7 @@ import { useRoles, isAdmin as checkIsAdmin, isBursar as checkIsBursar } from "@/
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { useLookup } from "@/lib/crud-helpers";
+import { useLookupMap } from "@/hooks/useLookupMap";
 import { resizeImageToDataUrl } from "@/lib/image";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,13 +26,24 @@ function Page() {
   const admin = checkIsAdmin(roles);
   const finance = admin || checkIsBursar(roles);
 
+  // Roles load async; a plain `defaultValue={admin ? "school" : "fees"}` computed before
+  // roles resolve can lock Tabs (uncontrolled) onto a tab whose trigger never renders for
+  // this user (e.g. a pure admin momentarily reads as neither admin nor finance).
+  const [tab, setTab] = useState<string | undefined>(undefined);
+  useEffect(() => {
+    if (tab) return;
+    if (admin) setTab("school");
+    else if (finance) setTab("fees");
+  }, [admin, finance, tab]);
+
   return (
-    <DashShell title="Settings" subtitle="School details, fees, academic terms and your account">
-      <Tabs defaultValue={admin ? "school" : "fees"}>
+    <DashShell title="Settings" subtitle="School details, fees, academic terms, exams and your account">
+      <Tabs value={tab ?? "profile"} onValueChange={setTab}>
         <TabsList className="flex-wrap h-auto">
           {admin && <TabsTrigger value="school">School Details</TabsTrigger>}
           {finance && <TabsTrigger value="fees">Fee Structures</TabsTrigger>}
           {admin && <TabsTrigger value="terms">Academic Terms</TabsTrigger>}
+          {admin && <TabsTrigger value="exams">Exams</TabsTrigger>}
           <TabsTrigger value="profile">Profile</TabsTrigger>
         </TabsList>
         {admin && (
@@ -54,11 +66,31 @@ function Page() {
             ]} />
           </TabsContent>
         )}
+        {admin && (
+          <TabsContent value="exams" className="mt-4">
+            <ExamsTab />
+          </TabsContent>
+        )}
         <TabsContent value="profile" className="mt-4">
           <ProfileTab />
         </TabsContent>
       </Tabs>
     </DashShell>
+  );
+}
+
+function ExamsTab() {
+  const { data: terms = [] } = useLookup("terms", "name");
+  const { map: termsById } = useLookupMap<{ name: string }>("terms");
+  return (
+    <CrudPage table="exams" title="Exam" fields={[
+      { name: "name", label: "Name", required: true },
+      {
+        name: "term_id", label: "Term", type: "select", options: terms,
+        format: (v) => (v ? termsById.get(v)?.name ?? "—" : "—"),
+      },
+      { name: "exam_date", label: "Date", type: "date" },
+    ]} />
   );
 }
 

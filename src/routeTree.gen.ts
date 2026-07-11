@@ -24,10 +24,12 @@ import { Route as AuthenticatedDashboardTeachersRouteImport } from './routes/_au
 import { Route as AuthenticatedDashboardStudentsRouteImport } from './routes/_authenticated/dashboard.students'
 import { Route as AuthenticatedDashboardSmsRouteImport } from './routes/_authenticated/dashboard.sms'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
+import { Route as AuthenticatedDashboardSalaryRouteImport } from './routes/_authenticated/dashboard.salary'
 import { Route as AuthenticatedDashboardPaymentsRouteImport } from './routes/_authenticated/dashboard.payments'
 import { Route as AuthenticatedDashboardMyChildrenRouteImport } from './routes/_authenticated/dashboard.my-children'
 import { Route as AuthenticatedDashboardMarksRouteImport } from './routes/_authenticated/dashboard.marks'
 import { Route as AuthenticatedDashboardClassesRouteImport } from './routes/_authenticated/dashboard.classes'
+import { Route as AuthenticatedDashboardAttendanceRouteImport } from './routes/_authenticated/dashboard.attendance'
 import { Route as ApiDbTableIdRouteImport } from './routes/api.db.$table.$id'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -109,6 +111,12 @@ const AuthenticatedDashboardSettingsRoute =
     path: '/settings',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardSalaryRoute =
+  AuthenticatedDashboardSalaryRouteImport.update({
+    id: '/salary',
+    path: '/salary',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const AuthenticatedDashboardPaymentsRoute =
   AuthenticatedDashboardPaymentsRouteImport.update({
     id: '/payments',
@@ -133,6 +141,12 @@ const AuthenticatedDashboardClassesRoute =
     path: '/classes',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardAttendanceRoute =
+  AuthenticatedDashboardAttendanceRouteImport.update({
+    id: '/attendance',
+    path: '/attendance',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 const ApiDbTableIdRoute = ApiDbTableIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -144,10 +158,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/dashboard/attendance': typeof AuthenticatedDashboardAttendanceRoute
   '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
   '/dashboard/marks': typeof AuthenticatedDashboardMarksRoute
   '/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/salary': typeof AuthenticatedDashboardSalaryRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/dashboard/sms': typeof AuthenticatedDashboardSmsRoute
   '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
@@ -164,10 +180,12 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/dashboard/attendance': typeof AuthenticatedDashboardAttendanceRoute
   '/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
   '/dashboard/marks': typeof AuthenticatedDashboardMarksRoute
   '/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
   '/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/dashboard/salary': typeof AuthenticatedDashboardSalaryRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/dashboard/sms': typeof AuthenticatedDashboardSmsRoute
   '/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
@@ -187,10 +205,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/dashboard/attendance': typeof AuthenticatedDashboardAttendanceRoute
   '/_authenticated/dashboard/classes': typeof AuthenticatedDashboardClassesRoute
   '/_authenticated/dashboard/marks': typeof AuthenticatedDashboardMarksRoute
   '/_authenticated/dashboard/my-children': typeof AuthenticatedDashboardMyChildrenRoute
   '/_authenticated/dashboard/payments': typeof AuthenticatedDashboardPaymentsRoute
+  '/_authenticated/dashboard/salary': typeof AuthenticatedDashboardSalaryRoute
   '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/_authenticated/dashboard/sms': typeof AuthenticatedDashboardSmsRoute
   '/_authenticated/dashboard/students': typeof AuthenticatedDashboardStudentsRoute
@@ -210,10 +230,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/dashboard'
+    | '/dashboard/attendance'
     | '/dashboard/classes'
     | '/dashboard/marks'
     | '/dashboard/my-children'
     | '/dashboard/payments'
+    | '/dashboard/salary'
     | '/dashboard/settings'
     | '/dashboard/sms'
     | '/dashboard/students'
@@ -230,10 +252,12 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/sitemap.xml'
+    | '/dashboard/attendance'
     | '/dashboard/classes'
     | '/dashboard/marks'
     | '/dashboard/my-children'
     | '/dashboard/payments'
+    | '/dashboard/salary'
     | '/dashboard/settings'
     | '/dashboard/sms'
     | '/dashboard/students'
@@ -252,10 +276,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/sitemap.xml'
     | '/_authenticated/dashboard'
+    | '/_authenticated/dashboard/attendance'
     | '/_authenticated/dashboard/classes'
     | '/_authenticated/dashboard/marks'
     | '/_authenticated/dashboard/my-children'
     | '/_authenticated/dashboard/payments'
+    | '/_authenticated/dashboard/salary'
     | '/_authenticated/dashboard/settings'
     | '/_authenticated/dashboard/sms'
     | '/_authenticated/dashboard/students'
@@ -388,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/salary': {
+      id: '/_authenticated/dashboard/salary'
+      path: '/salary'
+      fullPath: '/dashboard/salary'
+      preLoaderRoute: typeof AuthenticatedDashboardSalaryRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/_authenticated/dashboard/payments': {
       id: '/_authenticated/dashboard/payments'
       path: '/payments'
@@ -416,6 +449,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardClassesRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/attendance': {
+      id: '/_authenticated/dashboard/attendance'
+      path: '/attendance'
+      fullPath: '/dashboard/attendance'
+      preLoaderRoute: typeof AuthenticatedDashboardAttendanceRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
     '/api/db/$table/$id': {
       id: '/api/db/$table/$id'
       path: '/$id'
@@ -427,10 +467,12 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardAttendanceRoute: typeof AuthenticatedDashboardAttendanceRoute
   AuthenticatedDashboardClassesRoute: typeof AuthenticatedDashboardClassesRoute
   AuthenticatedDashboardMarksRoute: typeof AuthenticatedDashboardMarksRoute
   AuthenticatedDashboardMyChildrenRoute: typeof AuthenticatedDashboardMyChildrenRoute
   AuthenticatedDashboardPaymentsRoute: typeof AuthenticatedDashboardPaymentsRoute
+  AuthenticatedDashboardSalaryRoute: typeof AuthenticatedDashboardSalaryRoute
   AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
   AuthenticatedDashboardSmsRoute: typeof AuthenticatedDashboardSmsRoute
   AuthenticatedDashboardStudentsRoute: typeof AuthenticatedDashboardStudentsRoute
@@ -440,11 +482,14 @@ interface AuthenticatedDashboardRouteChildren {
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardAttendanceRoute:
+      AuthenticatedDashboardAttendanceRoute,
     AuthenticatedDashboardClassesRoute: AuthenticatedDashboardClassesRoute,
     AuthenticatedDashboardMarksRoute: AuthenticatedDashboardMarksRoute,
     AuthenticatedDashboardMyChildrenRoute:
       AuthenticatedDashboardMyChildrenRoute,
     AuthenticatedDashboardPaymentsRoute: AuthenticatedDashboardPaymentsRoute,
+    AuthenticatedDashboardSalaryRoute: AuthenticatedDashboardSalaryRoute,
     AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
     AuthenticatedDashboardSmsRoute: AuthenticatedDashboardSmsRoute,
     AuthenticatedDashboardStudentsRoute: AuthenticatedDashboardStudentsRoute,

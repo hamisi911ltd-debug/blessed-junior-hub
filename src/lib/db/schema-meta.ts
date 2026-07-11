@@ -2,7 +2,7 @@ export const TABLE_COLUMNS: Record<string, string[]> = {
   profiles: ["id", "full_name", "email", "phone", "avatar_url", "created_at", "updated_at"],
   user_roles: ["id", "user_id", "role", "created_at"],
   terms: ["id", "name", "year", "start_date", "end_date", "is_current", "created_at"],
-  classes: ["id", "name", "level", "class_teacher_id", "created_at", "updated_at"],
+  classes: ["id", "name", "level", "class_teacher_id", "capacity", "stream", "room", "description", "created_at", "updated_at"],
   subjects: ["id", "name", "code", "description", "created_at"],
   teachers: ["id", "profile_id", "staff_no", "id_no", "full_name", "email", "phone", "qualification", "date_hired", "created_at", "updated_at"],
   teacher_subjects: ["id", "teacher_id", "subject_id", "class_id"],
@@ -19,6 +19,9 @@ export const TABLE_COLUMNS: Record<string, string[]> = {
   announcements: ["id", "title", "body", "audience", "created_by", "created_at"],
   announcement_students: ["id", "announcement_id", "student_id"],
   school_settings: ["id", "name", "motto", "address", "phone", "email", "logo_url", "updated_at"],
+  salary_structures: ["id", "staff_id", "name", "amount", "description", "created_at"],
+  salary_payments: ["id", "staff_id", "month", "amount", "method", "reference", "paid_at", "recorded_by", "notes", "created_at"],
+  attendance: ["id", "student_id", "class_id", "date", "status", "recorded_by", "term_id", "created_at"],
 };
 
 /** Columns stored as SQLite INTEGER 0/1 that should coerce to/from JSON booleans at the API boundary. */

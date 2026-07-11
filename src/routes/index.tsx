@@ -5,6 +5,7 @@ import {
   BookOpen, GraduationCap, Users, Trophy, HeartHandshake, Sparkles,
   MapPin, Phone, Mail, Calendar, ArrowRight, CheckCircle2, School,
   Shield, Palette, Music, Microscope, Sun, ChevronRight,
+  Facebook, Instagram, Twitter, Youtube,
 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -90,7 +91,7 @@ function Hero() {
         <div className="relative">
           <div className="aspect-[4/5] rounded-3xl bg-brand-gradient shadow-glow p-2 rotate-2 hover:rotate-0 transition-transform duration-500">
             <img
-              src="https://images.pexels.com/photos/8500275/pexels-photo-8500275.jpeg?auto=compress&cs=tinysrgb&w=900"
+              src="https://images.pexels.com/photos/14909652/pexels-photo-14909652.jpeg?auto=compress&cs=tinysrgb&w=900"
               alt="Learners at Mombasa Kiongozi Academy"
               className="h-full w-full rounded-[22px] object-cover"
             />
@@ -100,7 +101,7 @@ function Hero() {
           </div>
           <div className="absolute -top-6 -right-4 hidden sm:block w-32 aspect-square rounded-2xl overflow-hidden border-4 border-background shadow-card rotate-6">
             <img
-              src="https://images.pexels.com/photos/10044928/pexels-photo-10044928.jpeg?auto=compress&cs=tinysrgb&w=300"
+              src="https://images.pexels.com/photos/9223236/pexels-photo-9223236.jpeg?auto=compress&cs=tinysrgb&w=300"
               alt="Pupil in school uniform"
               className="h-full w-full object-cover"
             />
@@ -250,17 +251,17 @@ function Life() {
     {
       t: "Reading Culture",
       d: "Daily library time and reading challenges.",
-      img: "https://images.pexels.com/photos/8500306/pexels-photo-8500306.jpeg?auto=compress&cs=tinysrgb&w=800",
+      img: "https://images.unsplash.com/photo-1576108700272-8d9f86c51273?q=80&w=800&auto=format&fit=crop",
     },
     {
       t: "Sports Day",
       d: "Termly inter-house competitions on our playgrounds.",
-      img: "https://images.pexels.com/photos/5896812/pexels-photo-5896812.jpeg?auto=compress&cs=tinysrgb&w=800",
+      img: "https://images.unsplash.com/photo-1591502843994-4d9433685765?q=80&w=800&auto=format&fit=crop",
     },
     {
       t: "Music & Drama",
       d: "Performances every term for the whole community.",
-      img: "https://images.pexels.com/photos/5905554/pexels-photo-5905554.jpeg?auto=compress&cs=tinysrgb&w=800",
+      img: "https://images.unsplash.com/photo-1548102249-acdce64fffbd?q=80&w=800&auto=format&fit=crop",
     },
   ];
   return (
@@ -282,10 +283,10 @@ function Life() {
       </div>
       <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
         {[
-          "https://images.pexels.com/photos/8617957/pexels-photo-8617957.jpeg?auto=compress&cs=tinysrgb&w=500",
-          "https://images.pexels.com/photos/5905924/pexels-photo-5905924.jpeg?auto=compress&cs=tinysrgb&w=500",
-          "https://images.pexels.com/photos/5896819/pexels-photo-5896819.jpeg?auto=compress&cs=tinysrgb&w=500",
-          "https://images.pexels.com/photos/5905505/pexels-photo-5905505.jpeg?auto=compress&cs=tinysrgb&w=500",
+          "https://images.unsplash.com/photo-1547082661-71362fc3969c?q=80&w=500&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1547226706-af7e2c20bcea?q=80&w=500&auto=format&fit=crop",
+          "https://images.pexels.com/photos/35839372/pexels-photo-35839372.jpeg?auto=compress&cs=tinysrgb&w=500",
+          "https://images.pexels.com/photos/18449718/pexels-photo-18449718.jpeg?auto=compress&cs=tinysrgb&w=500",
         ].map((src) => (
           <div key={src} className="aspect-square rounded-xl overflow-hidden border border-border">
             <img src={src} alt="Learners at Mombasa Kiongozi Academy" className="h-full w-full object-cover hover:scale-105 transition duration-500" />
@@ -366,12 +367,31 @@ function ContactCard({ icon, title, lines }: { icon: React.ReactNode; title: str
 }
 
 function Footer() {
+  const socials = [
+    { icon: Facebook, label: "Facebook", href: "#", bg: "#1877F2" },
+    { icon: Instagram, label: "Instagram", href: "#", bg: "#E1306C" },
+    { icon: Twitter, label: "Twitter / X", href: "#", bg: "#1DA1F2" },
+    { icon: Youtube, label: "YouTube", href: "#", bg: "#FF0000" },
+  ];
   return (
     <footer className="border-t border-border bg-secondary/40">
-      <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-4 items-center justify-between text-sm text-muted-foreground">
+      <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
           <span className="grid h-8 w-8 place-items-center rounded-lg bg-brand-gradient text-brand-foreground"><School className="h-4 w-4" /></span>
           © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
+        </div>
+        <div className="flex items-center gap-2">
+          {socials.map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              aria-label={s.label}
+              className="grid h-9 w-9 place-items-center rounded-full text-white shadow-card transition hover:opacity-90 hover:-translate-y-0.5"
+              style={{ backgroundColor: s.bg }}
+            >
+              <s.icon className="h-4 w-4" />
+            </a>
+          ))}
         </div>
         <div className="flex gap-6">
           <a href="#about" className="hover:text-primary">About</a>

@@ -87,6 +87,25 @@ export const TABLE_POLICIES: Record<string, TablePolicy> = {
   announcements: { list: "any", create: [{ roles: STAFF }], update: [{ roles: STAFF }], delete: [{ roles: STAFF }] },
   announcement_students: { list: [{ roles: STAFF }], create: [{ roles: STAFF }], update: [{ roles: STAFF }], delete: [{ roles: STAFF }] },
   school_settings: { list: "any", create: "deny", update: [{ roles: ["admin"] }], delete: "deny" },
+  salary_structures: {
+    list: [{ roles: FINANCE }, { self: "staff_id" }],
+    create: [{ roles: ["admin"] }],
+    update: [{ roles: ["admin"] }],
+    delete: [{ roles: ["admin"] }],
+  },
+  salary_payments: {
+    list: [{ roles: FINANCE }, { self: "staff_id" }],
+    create: [{ roles: FINANCE }],
+    update: [{ roles: FINANCE }],
+    delete: [{ roles: FINANCE }],
+  },
+  attendance: {
+    list: [{ roles: STAFF }],
+    listScope: parentOrStudentScope("student_id"),
+    create: [{ roles: STAFF }],
+    update: [{ roles: STAFF }],
+    delete: [{ roles: STAFF }],
+  },
 };
 
 function ruleAllows(rule: Rule, user: AuthedUser, row: Record<string, unknown> | undefined): boolean {
