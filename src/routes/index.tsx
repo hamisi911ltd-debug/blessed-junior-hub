@@ -14,6 +14,9 @@ import photo2 from "@/2.jpeg";
 import photo3 from "@/3.jpeg";
 import photo4 from "@/4.jpeg";
 import photo5 from "@/5.jpeg";
+import photoH from "@/h.jpeg";
+import photoJ from "@/j.jpeg";
+import photoK from "@/k.jpeg";
 
 const creativeImg = "https://images.pexels.com/photos/5063473/pexels-photo-5063473.jpeg?auto=compress&cs=tinysrgb&w=700";
 const inquisitiveImg = "https://images.pexels.com/photos/8617957/pexels-photo-8617957.jpeg?auto=compress&cs=tinysrgb&w=700";
@@ -27,7 +30,6 @@ function Landing() {
     <div className="min-h-screen bg-background">
       <Header />
       <Hero />
-      <Stats />
       <About />
       <Programs />
       <WhyUs />
@@ -70,7 +72,7 @@ function Header() {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero">
-      <div className="mx-auto max-w-7xl px-6 pt-3 pb-20 md:pt-4 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
+      <div className="mx-auto max-w-7xl px-6 pt-0 pb-20 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
         <Reveal from="left">
           <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.05]">
             Raising tomorrow's <span className="text-primary">leaders</span>.
@@ -106,26 +108,6 @@ function Hero() {
             🎉 CBC-aligned
           </div>
         </Reveal>
-      </div>
-    </section>
-  );
-}
-
-function Stats() {
-  const items = [
-    { v: "98%", l: "Parent satisfaction" },
-    { v: "1:15", l: "Teacher to pupil" },
-    { v: "14+", l: "Extra-curricular clubs" },
-  ];
-  return (
-    <section className="border-y border-border bg-secondary/40 overflow-x-clip">
-      <div className="mx-auto max-w-7xl px-6 py-10 grid grid-cols-3 gap-6">
-        {items.map((i, idx) => (
-          <Reveal key={i.l} from={idx % 2 === 0 ? "left" : "right"} delay={idx * 90} className="text-center">
-            <div className="text-3xl md:text-4xl font-extrabold text-primary font-display">{i.v}</div>
-            <div className="text-sm text-muted-foreground mt-1">{i.l}</div>
-          </Reveal>
-        ))}
       </div>
     </section>
   );
@@ -186,27 +168,27 @@ function Programs() {
   const progs = [
     {
       icon: <Sun />, title: "Early Years", desc: "Playgroup, PP1 & PP2 — play-based discovery.",
-      img: "https://images.pexels.com/photos/8363567/pexels-photo-8363567.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: photo1,
     },
     {
       icon: <BookOpen />, title: "Lower Primary", desc: "Grade 1–3, building reading, writing & numeracy.",
-      img: "https://images.pexels.com/photos/8500275/pexels-photo-8500275.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: photo2,
     },
     {
       icon: <GraduationCap />, title: "Upper Primary", desc: "Grade 4–6, preparing learners for KPSEA excellence.",
-      img: "https://images.pexels.com/photos/5905505/pexels-photo-5905505.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: photoK,
     },
     {
       icon: <Music />, title: "Arts & Music", desc: "Choir, drama, dance and craft clubs.",
-      img: "https://images.pexels.com/photos/7714216/pexels-photo-7714216.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: photo3,
     },
     {
       icon: <Microscope />, title: "STEM", desc: "Science lab, coding & robotics starter club.",
-      img: "https://images.pexels.com/photos/5905935/pexels-photo-5905935.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: photoH,
     },
     {
       icon: <Palette />, title: "Sports", desc: "Football, netball, athletics & swimming.",
-      img: "https://images.pexels.com/photos/36826363/pexels-photo-36826363.jpeg?auto=compress&cs=tinysrgb&w=700",
+      img: photoJ,
     },
   ];
   return (
