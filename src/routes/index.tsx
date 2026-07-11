@@ -67,13 +67,9 @@ function Header() {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero">
-      <div className="mx-auto max-w-7xl px-6 pt-6 pb-20 md:pt-10 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
+      <div className="mx-auto max-w-7xl px-6 pt-3 pb-20 md:pt-4 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
         <Reveal from="left">
-          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-background/70 px-3 py-1 text-xs font-medium">
-            <Sparkles className="h-3.5 w-3.5 text-[color:var(--accent-2)]" />
-            Enrolling for the new term now
-          </div>
-          <h1 className="mt-4 text-5xl md:text-6xl font-extrabold leading-[1.05]">
+          <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.05]">
             Raising tomorrow's <span className="text-primary">leaders</span>.
           </h1>
           <p className="mt-6 text-lg text-muted-foreground max-w-xl">
@@ -106,9 +102,6 @@ function Hero() {
           <div className="absolute -bottom-6 -left-6 rounded-2xl bg-[color:var(--accent-2)] text-[color:var(--primary-foreground)] px-4 py-3 shadow-card font-semibold rotate-[-4deg]">
             🎉 CBC-aligned
           </div>
-          <div className="absolute -top-6 -right-4 hidden sm:block w-32 aspect-square rounded-2xl overflow-hidden border-4 border-background shadow-card rotate-6">
-            <img src={photo1} alt="Pupil in school uniform" className="h-full w-full object-cover" />
-          </div>
         </Reveal>
       </div>
     </section>
@@ -120,11 +113,10 @@ function Stats() {
     { v: "98%", l: "Parent satisfaction" },
     { v: "1:15", l: "Teacher to pupil" },
     { v: "14+", l: "Extra-curricular clubs" },
-    { v: "Mombasa", l: "Proudly Kenyan, coastal roots" },
   ];
   return (
     <section className="border-y border-border bg-secondary/40 overflow-x-clip">
-      <div className="mx-auto max-w-7xl px-6 py-10 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="mx-auto max-w-7xl px-6 py-10 grid grid-cols-3 gap-6">
         {items.map((i, idx) => (
           <Reveal key={i.l} from={idx % 2 === 0 ? "left" : "right"} delay={idx * 90} className="text-center">
             <div className="text-3xl md:text-4xl font-extrabold text-primary font-display">{i.v}</div>
@@ -163,22 +155,37 @@ function About() {
           </ul>
         </Reveal>
         <div className="grid grid-cols-2 gap-4">
-          <Reveal from="right" delay={0}><Feature icon={<Shield />} title="Safe" desc="Fenced, monitored campus" /></Reveal>
-          <Reveal from="right" delay={100}><Feature icon={<HeartHandshake />} title="Nurturing" desc="Small class sizes" /></Reveal>
-          <Reveal from="right" delay={200}><Feature icon={<Sparkles />} title="Creative" desc="Arts, music, drama" /></Reveal>
-          <Reveal from="right" delay={300}><Feature icon={<Microscope />} title="Inquisitive" desc="Hands-on science" /></Reveal>
+          <Reveal from="right" delay={0}><PhotoFeature img={photo1} icon={<Shield />} title="Safe" desc="Fenced, monitored campus" /></Reveal>
+          <Reveal from="right" delay={100}><PhotoFeature img={photo2} icon={<HeartHandshake />} title="Nurturing" desc="Small class sizes" /></Reveal>
+          <Reveal from="right" delay={200}><Feature tone="white" icon={<Sparkles />} title="Creative" desc="Arts, music, drama" /></Reveal>
+          <Reveal from="right" delay={300}><Feature tone="green" icon={<Microscope />} title="Inquisitive" desc="Hands-on science" /></Reveal>
         </div>
       </div>
     </section>
   );
 }
 
-function Feature({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+function Feature({ icon, title, desc, tone = "white" }: { icon: React.ReactNode; title: string; desc: string; tone?: "white" | "green" }) {
+  const green = tone === "green";
   return (
-    <div className="rounded-2xl border border-border p-6 shadow-card hover:-translate-y-1 transition">
-      <div className="grid h-10 w-10 place-items-center rounded-lg bg-secondary text-primary">{icon}</div>
+    <div className={`rounded-2xl p-6 shadow-card hover:-translate-y-1 transition ${green ? "bg-brand-gradient text-brand-foreground" : "border border-border bg-card"}`}>
+      <div className={`grid h-10 w-10 place-items-center rounded-lg ${green ? "bg-white/15" : "bg-secondary text-primary"}`}>{icon}</div>
       <div className="mt-4 font-semibold text-lg">{title}</div>
-      <div className="text-sm text-muted-foreground">{desc}</div>
+      <div className={`text-sm ${green ? "opacity-90" : "text-muted-foreground"}`}>{desc}</div>
+    </div>
+  );
+}
+
+function PhotoFeature({ img, icon, title, desc }: { img: string; icon: React.ReactNode; title: string; desc: string }) {
+  return (
+    <div className="relative rounded-2xl overflow-hidden shadow-card hover:-translate-y-1 transition aspect-square">
+      <img src={img} alt={title} className="absolute inset-0 h-full w-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/10 to-transparent" />
+      <div className="relative h-full flex flex-col justify-end p-5 text-white">
+        <div className="grid h-9 w-9 place-items-center rounded-lg bg-white/20 backdrop-blur">{icon}</div>
+        <div className="mt-3 font-semibold text-lg">{title}</div>
+        <div className="text-sm opacity-90">{desc}</div>
+      </div>
     </div>
   );
 }
@@ -204,18 +211,21 @@ function Programs() {
           </p>
         </Reveal>
         <div className="mt-12 grid md:grid-cols-3 gap-6">
-          {progs.map((p, idx) => (
-            <Reveal key={p.title} from={idx % 2 === 0 ? "left" : "right"} delay={(idx % 3) * 110}>
-              <div className="group rounded-2xl bg-card border border-border p-6 shadow-card hover:shadow-glow transition h-full">
-                <div className="grid h-12 w-12 place-items-center rounded-xl bg-brand-gradient text-brand-foreground">{p.icon}</div>
-                <h3 className="mt-5 text-xl font-semibold">{p.title}</h3>
-                <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-                <div className="mt-4 text-sm text-primary font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
-                  Learn more <ChevronRight className="h-4 w-4" />
+          {progs.map((p, idx) => {
+            const green = idx % 2 === 1;
+            return (
+              <Reveal key={p.title} from={idx % 2 === 0 ? "left" : "right"} delay={(idx % 3) * 110}>
+                <div className={`group rounded-2xl p-6 shadow-card hover:shadow-glow hover:-translate-y-1 transition h-full ${green ? "bg-brand-gradient text-brand-foreground" : "bg-card border border-border"}`}>
+                  <div className={`grid h-12 w-12 place-items-center rounded-xl ${green ? "bg-white/15" : "bg-brand-gradient text-brand-foreground"}`}>{p.icon}</div>
+                  <h3 className="mt-5 text-xl font-semibold">{p.title}</h3>
+                  <p className={`mt-2 text-sm ${green ? "opacity-90" : "text-muted-foreground"}`}>{p.desc}</p>
+                  <div className={`mt-4 text-sm font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition ${green ? "" : "text-primary"}`}>
+                    Learn more <ChevronRight className="h-4 w-4" />
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -263,12 +273,6 @@ function Life() {
     },
     { t: "Digital Learning", d: "Hands-on time in our ICT computer lab every week.", img: photo5, from: "right" as const },
   ];
-  const gallery = [
-    photo2,
-    "https://images.unsplash.com/photo-1547082661-71362fc3969c?q=80&w=500&auto=format&fit=crop",
-    "https://images.unsplash.com/photo-1547226706-af7e2c20bcea?q=80&w=500&auto=format&fit=crop",
-    "https://images.pexels.com/photos/35839372/pexels-photo-35839372.jpeg?auto=compress&cs=tinysrgb&w=500",
-  ];
   return (
     <section id="life" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
       <Reveal from="top" className="text-center max-w-2xl mx-auto">
@@ -284,15 +288,6 @@ function Life() {
                 <div className="font-semibold">{c.t}</div>
                 <div className="text-sm text-muted-foreground mt-1">{c.d}</div>
               </div>
-            </div>
-          </Reveal>
-        ))}
-      </div>
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {gallery.map((src, idx) => (
-          <Reveal key={src} from={idx % 2 === 0 ? "left" : "right"} delay={idx * 80}>
-            <div className="aspect-square rounded-xl overflow-hidden border border-border">
-              <img src={src} alt="Learners at Mombasa Kiongozi Academy" className="h-full w-full object-cover hover:scale-105 transition duration-500" />
             </div>
           </Reveal>
         ))}
@@ -348,9 +343,9 @@ function Contact() {
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
       <div className="grid md:grid-cols-3 gap-6">
-        <Reveal from="left"><ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} /></Reveal>
-        <Reveal from="bottom" delay={100}><ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} /></Reveal>
-        <Reveal from="right" delay={200}><ContactCard icon={<Mail />} title="Email" lines={["info@mombasakiongozi.ac.ke", "admissions@mombasakiongozi.ac.ke"]} /></Reveal>
+        <Reveal from="left"><ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} tone="green" /></Reveal>
+        <Reveal from="bottom" delay={100}><ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} tone="white" /></Reveal>
+        <Reveal from="right" delay={200}><ContactCard icon={<Mail />} title="Email" lines={["info@mombasakiongozi.ac.ke", "admissions@mombasakiongozi.ac.ke"]} tone="green" /></Reveal>
       </div>
       <p className="mt-6 text-xs text-muted-foreground text-center max-w-xl mx-auto">
         Contact details above are placeholders — replace with the school's verified
@@ -360,12 +355,13 @@ function Contact() {
   );
 }
 
-function ContactCard({ icon, title, lines }: { icon: React.ReactNode; title: string; lines: string[] }) {
+function ContactCard({ icon, title, lines, tone = "white" }: { icon: React.ReactNode; title: string; lines: string[]; tone?: "white" | "green" }) {
+  const green = tone === "green";
   return (
-    <div className="rounded-2xl border border-border p-6 shadow-card">
-      <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand-gradient text-brand-foreground">{icon}</div>
+    <div className={`rounded-2xl p-6 shadow-card hover:-translate-y-1 transition ${green ? "bg-brand-gradient text-brand-foreground" : "border border-border bg-card"}`}>
+      <div className={`grid h-10 w-10 place-items-center rounded-lg ${green ? "bg-white/15" : "bg-brand-gradient text-brand-foreground"}`}>{icon}</div>
       <div className="mt-4 font-semibold text-lg">{title}</div>
-      {lines.map((l) => <div key={l} className="text-sm text-muted-foreground">{l}</div>)}
+      {lines.map((l) => <div key={l} className={`text-sm ${green ? "opacity-90" : "text-muted-foreground"}`}>{l}</div>)}
     </div>
   );
 }
@@ -378,33 +374,37 @@ function Footer() {
     { icon: Youtube, label: "YouTube", href: "#", bg: "#FF0000" },
   ];
   return (
-    <footer className="border-t border-border bg-secondary/40">
-      <div className="mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground">
-        <div className="flex items-center gap-2">
-          <span className="grid h-8 w-8 place-items-center rounded-lg overflow-hidden">
-            <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-cover" />
-          </span>
-          © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
+    <footer className="relative border-t border-border bg-secondary/40 overflow-hidden">
+      <div className="absolute inset-x-0 top-0 h-1 bg-brand-gradient" />
+      <div className="absolute -left-24 -bottom-24 h-64 w-64 rounded-full bg-[color:var(--accent-2)]/10 blur-3xl" />
+      <Reveal from="bottom">
+        <div className="relative mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground">
+          <div className="flex items-center gap-2">
+            <span className="grid h-8 w-8 place-items-center rounded-lg overflow-hidden">
+              <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-cover" />
+            </span>
+            © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
+          </div>
+          <div className="flex items-center gap-2">
+            {socials.map((s) => (
+              <a
+                key={s.label}
+                href={s.href}
+                aria-label={s.label}
+                className="grid h-9 w-9 place-items-center rounded-full text-white shadow-card transition hover:opacity-90 hover:-translate-y-0.5"
+                style={{ backgroundColor: s.bg }}
+              >
+                <s.icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
+          <div className="flex gap-6">
+            <a href="#about" className="hover:text-primary">About</a>
+            <a href="#admissions" className="hover:text-primary">Admissions</a>
+            <Link to="/auth" className="hover:text-primary">Portal</Link>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          {socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              aria-label={s.label}
-              className="grid h-9 w-9 place-items-center rounded-full text-white shadow-card transition hover:opacity-90 hover:-translate-y-0.5"
-              style={{ backgroundColor: s.bg }}
-            >
-              <s.icon className="h-4 w-4" />
-            </a>
-          ))}
-        </div>
-        <div className="flex gap-6">
-          <a href="#about" className="hover:text-primary">About</a>
-          <a href="#admissions" className="hover:text-primary">Admissions</a>
-          <Link to="/auth" className="hover:text-primary">Portal</Link>
-        </div>
-      </div>
+      </Reveal>
     </footer>
   );
 }
