@@ -83,7 +83,7 @@ function AuthPage() {
         </Link>
         <div className="rounded-3xl border border-border bg-card shadow-card p-8">
           <div className="flex items-center gap-2 mb-6">
-            <span className="grid h-10 w-10 place-items-center rounded-lg overflow-hidden"><img src={logo} alt="" className="h-full w-full object-cover" /></span>
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg overflow-hidden bg-white p-0.5"><img src={logo} alt="" className="h-full w-full object-contain" /></span>
             <div>
               <div className="font-display font-bold text-lg">Mombasa Kiongozi Academy</div>
               <div className="text-xs text-muted-foreground">School Management Portal</div>

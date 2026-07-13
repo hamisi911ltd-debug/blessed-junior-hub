@@ -44,21 +44,26 @@ function Landing() {
 function Header() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
-      <div className="mx-auto max-w-7xl px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 font-display font-bold text-lg">
-          <span className="grid h-9 w-9 place-items-center rounded-lg overflow-hidden shadow-glow">
-            <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-cover" />
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+        <Link to="/" className="flex items-center gap-2.5 shrink-0 font-display font-bold text-base sm:text-lg">
+          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg overflow-hidden bg-white shadow-glow p-0.5">
+            <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-contain" />
           </span>
-          <span>Mombasa Kiongozi <span className="text-primary">Academy</span></span>
+          <span className="hidden sm:inline leading-tight whitespace-nowrap">
+            Mombasa Kiongozi <span className="text-primary">Academy</span>
+          </span>
+          <span className="sm:hidden leading-tight whitespace-nowrap">
+            Kiongozi <span className="text-primary">Academy</span>
+          </span>
         </Link>
-        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-          <a href="#about" className="hover:text-primary transition">About</a>
-          <a href="#programs" className="hover:text-primary transition">Programs</a>
-          <a href="#life" className="hover:text-primary transition">School Life</a>
-          <a href="#admissions" className="hover:text-primary transition">Admissions</a>
-          <a href="#contact" className="hover:text-primary transition">Contact</a>
+        <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-foreground/80 shrink-0">
+          <a href="#about" className="whitespace-nowrap hover:text-primary transition">About</a>
+          <a href="#programs" className="whitespace-nowrap hover:text-primary transition">Programs</a>
+          <a href="#life" className="whitespace-nowrap hover:text-primary transition">School Life</a>
+          <a href="#admissions" className="whitespace-nowrap hover:text-primary transition">Admissions</a>
+          <a href="#contact" className="whitespace-nowrap hover:text-primary transition">Contact</a>
         </nav>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <Button asChild variant="ghost" size="sm"><Link to="/auth">Sign in</Link></Button>
           <Button asChild size="sm" className="bg-brand-gradient text-brand-foreground shadow-glow">
             <Link to="/auth">Portal <ArrowRight className="ml-1 h-4 w-4" /></Link>
@@ -72,7 +77,7 @@ function Header() {
 function Hero() {
   return (
     <section className="relative overflow-hidden bg-hero">
-      <div className="mx-auto max-w-7xl px-6 pt-0 pb-20 md:pb-28 grid md:grid-cols-2 gap-12 items-center">
+      <div className="mx-auto max-w-7xl px-6 pt-0 pb-14 md:pb-16 grid md:grid-cols-2 gap-12 items-center">
         <Reveal from="left">
           <h1 className="text-5xl md:text-6xl font-extrabold leading-[1.05]">
             Raising tomorrow's <span className="text-primary">leaders</span>.
@@ -115,7 +120,7 @@ function Hero() {
 
 function About() {
   return (
-    <section id="about" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
+    <section id="about" className="mx-auto max-w-7xl px-6 py-14 md:py-16 overflow-x-clip">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <Reveal from="left">
           <div className="text-xs uppercase tracking-widest text-primary font-semibold">About us</div>
@@ -192,7 +197,7 @@ function Programs() {
     },
   ];
   return (
-    <section id="programs" className="bg-secondary/40 py-20 overflow-x-clip">
+    <section id="programs" className="bg-secondary/40 py-14 md:py-16 overflow-x-clip">
       <div className="mx-auto max-w-7xl px-6">
         <Reveal from="top" className="text-center max-w-2xl mx-auto">
           <div className="text-xs uppercase tracking-widest text-primary font-semibold">Programs</div>
@@ -207,17 +212,16 @@ function Programs() {
             const green = idx % 2 === 1;
             return (
               <Reveal key={p.title} from={idx % 2 === 0 ? "left" : "right"} delay={(idx % 3) * 110}>
-                <div className="group rounded-2xl overflow-hidden border border-border bg-card shadow-card hover:shadow-glow hover:-translate-y-1 transition h-full">
-                  <div className="relative h-40">
-                    <img src={p.img} alt={p.title} className="h-full w-full object-cover" />
-                    <div className={`absolute top-3 left-3 grid h-11 w-11 place-items-center rounded-xl shadow-card ${green ? "bg-brand-gradient text-brand-foreground" : "bg-white/95 text-primary backdrop-blur"}`}>
-                      {p.icon}
-                    </div>
+                <div className="group relative rounded-2xl overflow-hidden border border-border shadow-card hover:shadow-glow hover:-translate-y-1 transition h-72">
+                  <img src={p.img} alt={p.title} className="absolute inset-0 h-full w-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                  <div className={`absolute top-3 left-3 grid h-11 w-11 place-items-center rounded-xl shadow-card ${green ? "bg-brand-gradient text-brand-foreground" : "bg-white/95 text-primary backdrop-blur"}`}>
+                    {p.icon}
                   </div>
-                  <div className="p-6">
+                  <div className="relative h-full flex flex-col justify-end p-5 text-white">
                     <h3 className="text-xl font-semibold">{p.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground">{p.desc}</p>
-                    <div className="mt-4 text-sm text-primary font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
+                    <p className="mt-1 text-sm text-white/85">{p.desc}</p>
+                    <div className="mt-3 text-sm font-medium inline-flex items-center gap-1 opacity-0 group-hover:opacity-100 transition">
                       Learn more <ChevronRight className="h-4 w-4" />
                     </div>
                   </div>
@@ -233,7 +237,7 @@ function Programs() {
 
 function WhyUs() {
   return (
-    <section className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
+    <section className="mx-auto max-w-7xl px-6 py-14 md:py-16 overflow-x-clip">
       <Reveal from="bottom">
         <div className="rounded-3xl bg-brand-gradient text-brand-foreground p-10 md:p-14 shadow-glow relative overflow-hidden">
           <div className="absolute -right-16 -top-16 h-72 w-72 rounded-full bg-[color:var(--accent-2)]/40 blur-3xl" />
@@ -273,7 +277,7 @@ function Life() {
     { t: "Digital Learning", d: "Hands-on time in our ICT computer lab every week.", img: photo5, from: "right" as const },
   ];
   return (
-    <section id="life" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
+    <section id="life" className="mx-auto max-w-7xl px-6 py-14 md:py-16 overflow-x-clip">
       <Reveal from="top" className="text-center max-w-2xl mx-auto">
         <div className="text-xs uppercase tracking-widest text-primary font-semibold">School Life</div>
         <h2 className="mt-3 text-4xl font-bold">Every day is an adventure</h2>
@@ -281,11 +285,12 @@ function Life() {
       <div className="mt-12 grid md:grid-cols-3 gap-6">
         {cards.map((c) => (
           <Reveal key={c.t} from={c.from}>
-            <div className="rounded-2xl overflow-hidden border border-border shadow-card">
-              <img src={c.img} alt={c.t} className="h-44 w-full object-cover" />
-              <div className="p-5">
-                <div className="font-semibold">{c.t}</div>
-                <div className="text-sm text-muted-foreground mt-1">{c.d}</div>
+            <div className="relative rounded-2xl overflow-hidden border border-border shadow-card hover:-translate-y-1 transition h-64">
+              <img src={c.img} alt={c.t} className="absolute inset-0 h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+              <div className="relative h-full flex flex-col justify-end p-5 text-white">
+                <div className="font-semibold text-lg">{c.t}</div>
+                <div className="text-sm text-white/85 mt-1">{c.d}</div>
               </div>
             </div>
           </Reveal>
@@ -297,7 +302,7 @@ function Life() {
 
 function Admissions() {
   return (
-    <section id="admissions" className="bg-secondary/40 py-20 overflow-x-clip">
+    <section id="admissions" className="bg-secondary/40 py-14 md:py-16 overflow-x-clip">
       <div className="mx-auto max-w-5xl px-6">
         <div className="rounded-3xl bg-card border border-border p-10 shadow-card">
           <div className="grid md:grid-cols-2 gap-10">
@@ -340,7 +345,7 @@ function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactN
 
 function Contact() {
   return (
-    <section id="contact" className="mx-auto max-w-7xl px-6 py-20 overflow-x-clip">
+    <section id="contact" className="mx-auto max-w-7xl px-6 py-14 md:py-16 overflow-x-clip">
       <div className="grid md:grid-cols-3 gap-6">
         <Reveal from="left"><ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} tone="green" /></Reveal>
         <Reveal from="bottom" delay={100}><ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} tone="white" /></Reveal>
@@ -379,8 +384,8 @@ function Footer() {
       <Reveal from="bottom">
         <div className="relative mx-auto max-w-7xl px-6 py-10 flex flex-col md:flex-row gap-6 items-center justify-between text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
-            <span className="grid h-8 w-8 place-items-center rounded-lg overflow-hidden">
-              <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-cover" />
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg overflow-hidden bg-white p-0.5">
+              <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-contain" />
             </span>
             © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
           </div>

@@ -6,6 +6,8 @@ import { useLookupMap } from "@/hooks/useLookupMap";
 import { Users, GraduationCap, DollarSign, School, TrendingDown } from "lucide-react";
 import { useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { useAuth } from "@/hooks/useAuth";
+import welcomeImg from "@/j.jpeg";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: Overview,
@@ -34,6 +36,8 @@ function useSum(table: string, column: string) {
 const PIE_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"];
 
 function Overview() {
+  const { user } = useAuth();
+  const firstName = (user?.full_name ?? "").split(" ")[0];
   const students = useCount("students");
   const teachers = useCount("teachers");
   const classes = useCount("classes");
@@ -65,12 +69,18 @@ function Overview() {
         <StudentsByClassChart />
       </div>
 
-      <div className="mt-8 rounded-2xl border bg-card p-6 shadow-card">
-        <div className="font-display font-semibold text-lg">Welcome to Mombasa Kiongozi Academy</div>
-        <p className="text-sm text-muted-foreground mt-2 max-w-2xl">
-          Use the sidebar to manage students, teachers, classes, fees, results and more. Parents can
-          jump to <b>My children</b> to view their child's records.
-        </p>
+      <div className="mt-8 relative rounded-2xl overflow-hidden shadow-card">
+        <img src={welcomeImg} alt="" className="absolute inset-0 h-full w-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/10" />
+        <div className="relative p-6 md:p-8 text-white max-w-xl">
+          <div className="font-display font-bold text-xl md:text-2xl">
+            {firstName ? `Welcome back, ${firstName}.` : "Welcome to Mombasa Kiongozi Academy"}
+          </div>
+          <p className="text-sm opacity-90 mt-2">
+            Use the sidebar to manage students, teachers, classes, fees, results and more. Parents can
+            jump to <b>My children</b> to view their child's records.
+          </p>
+        </div>
       </div>
     </DashShell>
   );
