@@ -45,15 +45,12 @@ function Header() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur bg-background/80 border-b border-border">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-        <Link to="/" className="flex items-center gap-2.5 shrink-0 font-display font-bold text-base sm:text-lg">
-          <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg overflow-hidden bg-white shadow-glow p-0.5">
+        <Link to="/" className="flex items-center gap-2 sm:gap-2.5 min-w-0 font-display font-bold text-sm sm:text-base md:text-lg">
+          <span className="grid h-10 w-10 sm:h-11 sm:w-11 shrink-0 place-items-center rounded-lg overflow-hidden bg-white shadow-glow p-0.5">
             <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-contain" />
           </span>
-          <span className="hidden sm:inline leading-tight whitespace-nowrap">
+          <span className="leading-tight whitespace-nowrap">
             Mombasa Kiongozi <span className="text-primary">Academy</span>
-          </span>
-          <span className="sm:hidden leading-tight whitespace-nowrap">
-            Kiongozi <span className="text-primary">Academy</span>
           </span>
         </Link>
         <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-foreground/80 shrink-0">
@@ -64,9 +61,8 @@ function Header() {
           <a href="#contact" className="whitespace-nowrap hover:text-primary transition">Contact</a>
         </nav>
         <div className="flex items-center gap-2 shrink-0">
-          <Button asChild variant="ghost" size="sm"><Link to="/auth">Sign in</Link></Button>
           <Button asChild size="sm" className="bg-brand-gradient text-brand-foreground shadow-glow">
-            <Link to="/auth">Portal <ArrowRight className="ml-1 h-4 w-4" /></Link>
+            <Link to="/auth">Sign in</Link>
           </Button>
         </div>
       </div>

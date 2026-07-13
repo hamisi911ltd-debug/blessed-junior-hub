@@ -3,11 +3,8 @@ import { DashShell } from "@/components/dash/Shell";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/api-client";
 import { useLookupMap } from "@/hooks/useLookupMap";
-import { Users, GraduationCap, DollarSign, School, TrendingDown } from "lucide-react";
 import { useMemo } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
-import { useAuth } from "@/hooks/useAuth";
-import welcomeImg from "@/j.jpeg";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: Overview,
@@ -36,53 +33,65 @@ function useSum(table: string, column: string) {
 const PIE_COLORS = ["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"];
 
 function Overview() {
-  const { user } = useAuth();
-  const firstName = (user?.full_name ?? "").split(" ")[0];
-  const students = useCount("students");
-  const teachers = useCount("teachers");
-  const classes = useCount("classes");
-  const paymentsTotal = useSum("payments", "amount");
-  const expTotal = useSum("expenditures", "amount");
-
-  const stats = [
-    { label: "Students", value: students.data ?? "—", icon: <Users className="h-5 w-5" /> },
-    { label: "Teachers", value: teachers.data ?? "—", icon: <GraduationCap className="h-5 w-5" /> },
-    { label: "Classes", value: classes.data ?? "—", icon: <School className="h-5 w-5" /> },
-    { label: "Total collected", value: fmt(paymentsTotal.data ?? 0), icon: <DollarSign className="h-5 w-5" /> },
-    { label: "Total spent", value: fmt(expTotal.data ?? 0), icon: <TrendingDown className="h-5 w-5" /> },
-  ];
-
   return (
     <DashShell title="Overview" subtitle="Everything at a glance">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        {stats.map(s => (
-          <div key={s.label} className="rounded-2xl border bg-card p-5 shadow-card">
-            <div className="grid h-10 w-10 place-items-center rounded-lg bg-brand-gradient text-brand-foreground">{s.icon}</div>
-            <div className="mt-4 text-2xl md:text-3xl font-bold font-display truncate">{s.value}</div>
-            <div className="text-xs text-muted-foreground">{s.label}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6 lg:grid-cols-2">
+        <CountsChart />
+        <FinanceChart />
         <PaymentsChart />
         <StudentsByClassChart />
       </div>
-
-      <div className="mt-8 relative rounded-2xl overflow-hidden shadow-card">
-        <img src={welcomeImg} alt="" className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/10" />
-        <div className="relative p-6 md:p-8 text-white max-w-xl">
-          <div className="font-display font-bold text-xl md:text-2xl">
-            {firstName ? `Welcome back, ${firstName}.` : "Welcome to Mombasa Kiongozi Academy"}
-          </div>
-          <p className="text-sm opacity-90 mt-2">
-            Use the sidebar to manage students, teachers, classes, fees, results and more. Parents can
-            jump to <b>My children</b> to view their child's records.
-          </p>
-        </div>
-      </div>
     </DashShell>
+  );
+}
+
+function CountsChart() {
+  const students = useCount("students");
+  const teachers = useCount("teachers");
+  const classes = useCount("classes");
+  const data = [
+    { name: "Students", value: students.data ?? 0 },
+    { name: "Teachers", value: teachers.data ?? 0 },
+    { name: "Classes", value: classes.data ?? 0 },
+  ];
+
+  return (
+    <div className="rounded-2xl border bg-card p-6 shadow-card">
+      <div className="font-display font-semibold mb-4">Students, teachers & classes</div>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+          <XAxis dataKey="name" fontSize={12} stroke="var(--muted-foreground)" />
+          <YAxis fontSize={12} stroke="var(--muted-foreground)" allowDecimals={false} />
+          <Tooltip contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: 8 }} />
+          <Bar dataKey="value" fill="var(--chart-2)" radius={[6, 6, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+function FinanceChart() {
+  const paymentsTotal = useSum("payments", "amount");
+  const expTotal = useSum("expenditures", "amount");
+  const data = [
+    { name: "Collected", value: paymentsTotal.data ?? 0 },
+    { name: "Spent", value: expTotal.data ?? 0 },
+  ];
+
+  return (
+    <div className="rounded-2xl border bg-card p-6 shadow-card">
+      <div className="font-display font-semibold mb-4">Total collected vs spent</div>
+      <ResponsiveContainer width="100%" height={280}>
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
+          <XAxis dataKey="name" fontSize={12} stroke="var(--muted-foreground)" />
+          <YAxis fontSize={12} stroke="var(--muted-foreground)" tickFormatter={(v) => fmt(Number(v))} width={70} />
+          <Tooltip formatter={(v: number) => fmt(v)} contentStyle={{ background: "var(--card)", border: "1px solid var(--border)", borderRadius: 8 }} />
+          <Bar dataKey="value" fill="var(--chart-3)" radius={[6, 6, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+    </div>
   );
 }
 

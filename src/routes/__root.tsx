@@ -84,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=1" },
       { title: "Mombasa Kiongozi Academy — Mombasa, Kenya" },
       { name: "description", content: "Mombasa Kiongozi Academy in Mombasa, Kenya nurtures curious, confident learners with a CBC-aligned curriculum, caring teachers, and a vibrant campus community." },
       { name: "author", content: "Mombasa Kiongozi Academy" },
