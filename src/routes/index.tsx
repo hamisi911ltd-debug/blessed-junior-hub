@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/Reveal";
 import {
   BookOpen, GraduationCap, Users, Trophy, HeartHandshake, Sparkles,
   MapPin, Phone, Mail, Calendar, ArrowRight, CheckCircle2,
   Shield, Palette, Music, Microscope, Sun, ChevronRight,
-  Facebook, Instagram, Twitter, Youtube,
 } from "lucide-react";
 import logo from "@/LOGO.jpeg";
 import photo1 from "@/1.jpeg";
@@ -340,17 +340,31 @@ function Row({ icon, children }: { icon: React.ReactNode; children: React.ReactN
 }
 
 function Contact() {
+  const { data } = useQuery({
+    queryKey: ["public", "school-contact"],
+    queryFn: async () => {
+      const res = await fetch("/api/public/school-contact");
+      return res.json() as Promise<{ name: string | null; phone: string | null; email: string | null; address: string | null }>;
+    },
+  });
+
+  const cards = [
+    { icon: <MapPin />, title: "Location", lines: data?.address ? [data.address] : [], tone: "green" as const },
+    { icon: <Phone />, title: "Phone", lines: data?.phone ? [data.phone] : [], tone: "white" as const },
+    { icon: <Mail />, title: "Email", lines: data?.email ? [data.email] : [], tone: "green" as const },
+  ].filter((c) => c.lines.length > 0);
+
+  if (!data || cards.length === 0) return null;
+
   return (
     <section id="contact" className="mx-auto max-w-7xl px-6 py-14 md:py-16 overflow-x-clip">
-      <div className="grid md:grid-cols-3 gap-6">
-        <Reveal from="left"><ContactCard icon={<MapPin />} title="Location" lines={["Mombasa, Kenya"]} tone="green" /></Reveal>
-        <Reveal from="bottom" delay={100}><ContactCard icon={<Phone />} title="Phone" lines={["+254 700 000 000", "+254 780 000 000"]} tone="white" /></Reveal>
-        <Reveal from="right" delay={200}><ContactCard icon={<Mail />} title="Email" lines={["info@mombasakiongozi.ac.ke", "admissions@mombasakiongozi.ac.ke"]} tone="green" /></Reveal>
+      <div className={`grid gap-6 ${cards.length === 3 ? "md:grid-cols-3" : cards.length === 2 ? "md:grid-cols-2" : "md:grid-cols-1 max-w-sm mx-auto"}`}>
+        {cards.map((c, i) => (
+          <Reveal key={c.title} from={i === 0 ? "left" : i === cards.length - 1 ? "right" : "bottom"} delay={i * 100}>
+            <ContactCard icon={c.icon} title={c.title} lines={c.lines} tone={c.tone} />
+          </Reveal>
+        ))}
       </div>
-      <p className="mt-6 text-xs text-muted-foreground text-center max-w-xl mx-auto">
-        Contact details above are placeholders — replace with the school's verified
-        phone number, email and street address.
-      </p>
     </section>
   );
 }
@@ -367,12 +381,6 @@ function ContactCard({ icon, title, lines, tone = "white" }: { icon: React.React
 }
 
 function Footer() {
-  const socials = [
-    { icon: Facebook, label: "Facebook", href: "#", bg: "#1877F2" },
-    { icon: Instagram, label: "Instagram", href: "#", bg: "#E1306C" },
-    { icon: Twitter, label: "Twitter / X", href: "#", bg: "#1DA1F2" },
-    { icon: Youtube, label: "YouTube", href: "#", bg: "#FF0000" },
-  ];
   return (
     <footer className="relative border-t border-border bg-secondary/40 overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-1 bg-brand-gradient" />
@@ -384,19 +392,6 @@ function Footer() {
               <img src={logo} alt="Mombasa Kiongozi Academy crest" className="h-full w-full object-contain" />
             </span>
             © {new Date().getFullYear()} Mombasa Kiongozi Academy, Mombasa, Kenya.
-          </div>
-          <div className="flex items-center gap-2">
-            {socials.map((s) => (
-              <a
-                key={s.label}
-                href={s.href}
-                aria-label={s.label}
-                className="grid h-9 w-9 place-items-center rounded-full text-white shadow-card transition hover:opacity-90 hover:-translate-y-0.5"
-                style={{ backgroundColor: s.bg }}
-              >
-                <s.icon className="h-4 w-4" />
-              </a>
-            ))}
           </div>
           <div className="flex gap-6">
             <a href="#about" className="hover:text-primary">About</a>
