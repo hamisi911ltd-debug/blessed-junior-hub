@@ -13,7 +13,7 @@ export const Route = createFileRoute("/_authenticated/dashboard/payments")({
 function Page() {
   const { user } = useAuth();
   const { data: roles = [] } = useRoles(user?.id);
-  const canSeeExpenditure = checkIsAdmin(roles) || checkIsBursar(roles);
+  const finance = checkIsAdmin(roles) || checkIsBursar(roles);
   const { data: students = [] } = useLookup("students", "full_name");
   const { data: terms = [] } = useLookup("terms", "name");
 
@@ -22,10 +22,10 @@ function Page() {
       <Tabs defaultValue="payments">
         <TabsList>
           <TabsTrigger value="payments">Payments</TabsTrigger>
-          {canSeeExpenditure && <TabsTrigger value="expenditure">Expenditure</TabsTrigger>}
+          {finance && <TabsTrigger value="expenditure">Expenditure</TabsTrigger>}
         </TabsList>
         <TabsContent value="payments" className="mt-4">
-          <CrudPage table="payments" title="Payment" fields={[
+          <CrudPage table="payments" title="Payment" canWrite={finance} fields={[
             { name: "student_id", label: "Student", type: "select", options: students, required: true },
             { name: "term_id", label: "Term paid for", type: "select", options: terms, required: true },
             { name: "amount", label: "Amount (KES)", type: "number", required: true },
@@ -42,7 +42,7 @@ function Page() {
             { name: "notes", label: "Notes", type: "textarea", hideInTable: true },
           ]} />
         </TabsContent>
-        {canSeeExpenditure && (
+        {finance && (
           <TabsContent value="expenditure" className="mt-4">
             <CrudPage table="expenditures" title="Expenditure" fields={[
               { name: "category", label: "Category", required: true },

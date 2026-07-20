@@ -41,7 +41,7 @@ function Page() {
           {admin && <TabsTrigger value="roles">Roles & Access</TabsTrigger>}
         </TabsList>
         <TabsContent value="teachers" className="mt-4">
-          <CrudPage table="teachers" title="Teacher" fields={[
+          <CrudPage table="teachers" title="Teacher" canWrite={admin} fields={[
             { name: "staff_no", label: "Staff No" },
             { name: "id_no", label: "ID No" },
             { name: "full_name", label: "Full name", required: true },

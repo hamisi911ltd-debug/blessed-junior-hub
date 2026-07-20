@@ -25,7 +25,7 @@ const NAV: NavItem[] = [
   { to: "/dashboard/marks", label: "Marks & Reports", icon: <ClipboardList className="h-4 w-4" /> },
   { to: "/dashboard/attendance", label: "Attendance", icon: <ClipboardCheck className="h-4 w-4" /> },
   { to: "/dashboard/salary", label: "Salary", icon: <Banknote className="h-4 w-4" />, show: (r) => isStaff(r as any) },
-  { to: "/dashboard/sms", label: "SMS Broadcast", icon: <Megaphone className="h-4 w-4" /> },
+  { to: "/dashboard/sms", label: "SMS Broadcast", icon: <Megaphone className="h-4 w-4" />, show: (r) => isStaff(r as any) },
   { to: "/dashboard/settings", label: "Settings", icon: <Settings className="h-4 w-4" />, show: (r) => isAdmin(r as any) || isBursar(r as any) },
   { to: "/dashboard/my-children", label: "My children", icon: <Baby className="h-4 w-4" />, show: (r) => isParent(r as any) },
 ];

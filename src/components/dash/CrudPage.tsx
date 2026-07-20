@@ -26,13 +26,20 @@ export type FieldDef = {
 const ALL = "__all__";
 
 export function CrudPage({
-  table, fields, title, canWrite = true, orderBy = "created_at", select,
+  table, fields, title, canWrite = true, canCreate, canEdit, canDelete, orderBy = "created_at", select,
   extraColumns,
 }: {
-  table: string; fields: FieldDef[]; title: string; canWrite?: boolean; orderBy?: string;
+  table: string; fields: FieldDef[]; title: string; canWrite?: boolean;
+  /** Override canWrite for just one action, e.g. a role that can add rows but not delete them. */
+  canCreate?: boolean; canEdit?: boolean; canDelete?: boolean;
+  orderBy?: string;
   select?: string;
   extraColumns?: { label: string; render: (row: any) => ReactNode }[];
 }) {
+  const allowCreate = canCreate ?? canWrite;
+  const allowEdit = canEdit ?? canWrite;
+  const allowDelete = canDelete ?? canWrite;
+  const allowRowActions = allowEdit || allowDelete;
   const { data = [], isLoading } = useList<any>(table, { orderBy, ascending: false, select });
   const { create, update, remove } = useCrud(table);
   const [open, setOpen] = useState(false);
@@ -105,7 +112,7 @@ export function CrudPage({
           ))}
           <div className="text-sm text-muted-foreground">{filtered.length} of {data.length} record{data.length === 1 ? "" : "s"}</div>
         </div>
-        {canWrite && (
+        {allowCreate && (
           <Button onClick={openCreate} className="bg-brand-gradient text-brand-foreground shrink-0">
             <Plus className="h-4 w-4 mr-1" /> New {title}
           </Button>
@@ -117,7 +124,7 @@ export function CrudPage({
             <TableRow>
               {visible.map(f => <TableHead key={f.name}>{f.label}</TableHead>)}
               {extraColumns?.map(c => <TableHead key={c.label}>{c.label}</TableHead>)}
-              {canWrite && <TableHead className="text-right">Actions</TableHead>}
+              {allowRowActions && <TableHead className="text-right">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -137,10 +144,10 @@ export function CrudPage({
                   </TableCell>
                 ))}
                 {extraColumns?.map(c => <TableCell key={c.label}>{c.render(row)}</TableCell>)}
-                {canWrite && (
+                {allowRowActions && (
                   <TableCell className="text-right">
-                    <Button variant="ghost" size="icon" onClick={() => openEdit(row)}><Pencil className="h-4 w-4" /></Button>
-                    <Button variant="ghost" size="icon" onClick={() => setConfirmId(row.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
+                    {allowEdit && <Button variant="ghost" size="icon" onClick={() => openEdit(row)}><Pencil className="h-4 w-4" /></Button>}
+                    {allowDelete && <Button variant="ghost" size="icon" onClick={() => setConfirmId(row.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>}
                   </TableCell>
                 )}
               </TableRow>

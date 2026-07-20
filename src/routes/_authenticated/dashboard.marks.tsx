@@ -55,7 +55,7 @@ function Page() {
           </TabsContent>
         )}
         <TabsContent value="results" className="mt-4">
-          <CrudPage table="results" title="Result" fields={[
+          <CrudPage table="results" title="Result" canWrite={staff} fields={[
             {
               name: "student_id", label: "Student", type: "select", options: students, required: true,
               format: (v) => (v ? studentsById.get(v)?.full_name ?? "—" : "—"),

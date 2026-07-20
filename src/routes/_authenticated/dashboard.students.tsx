@@ -2,12 +2,18 @@ import { createFileRoute } from "@tanstack/react-router";
 import { DashShell } from "@/components/dash/Shell";
 import { CrudPage } from "@/components/dash/CrudPage";
 import { useLookup } from "@/lib/crud-helpers";
+import { useAuth } from "@/hooks/useAuth";
+import { useRoles, isAdmin as checkIsAdmin, isTeacher as checkIsTeacher } from "@/hooks/useRoles";
 
 export const Route = createFileRoute("/_authenticated/dashboard/students")({
   component: Page,
 });
 
 function Page() {
+  const { user } = useAuth();
+  const { data: roles = [] } = useRoles(user?.id);
+  const admin = checkIsAdmin(roles);
+  const canAddOrEdit = admin || checkIsTeacher(roles);
   const { data: classes = [] } = useLookup("classes", "name");
   return (
     <DashShell title="Students" subtitle="Enrollment records">
@@ -15,7 +21,7 @@ function Page() {
         Enrolling a student automatically creates a portal login for their guardian — sign in with the
         <b> guardian phone number</b> and the student's <b>admission number</b> as the password.
       </div>
-      <CrudPage table="students" title="Student" fields={[
+      <CrudPage table="students" title="Student" canCreate={canAddOrEdit} canEdit={canAddOrEdit} canDelete={admin} fields={[
         { name: "photo_url", label: "Photo", type: "image" },
         { name: "admission_no", label: "Admission No", required: true },
         { name: "full_name", label: "Full name", required: true },

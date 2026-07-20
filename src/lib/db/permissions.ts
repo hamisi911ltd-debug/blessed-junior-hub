@@ -57,8 +57,8 @@ export const TABLE_POLICIES: Record<string, TablePolicy> = {
   students: {
     list: [{ roles: STAFF }, { self: "profile_id" }],
     listScope: parentOrStudentScope("id"),
-    create: [{ roles: ["admin"] }],
-    update: [{ roles: ["admin"] }],
+    create: [{ roles: ["admin", "teacher"] }],
+    update: [{ roles: ["admin", "teacher"] }],
     delete: [{ roles: ["admin"] }],
   },
   parent_students: {
